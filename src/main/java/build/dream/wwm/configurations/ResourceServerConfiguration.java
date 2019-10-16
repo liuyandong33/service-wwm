@@ -11,17 +11,21 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
-import org.springframework.security.web.AuthenticationEntryPoint;
 
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
-//    @Autowired
+    //    @Autowired
 //    private AuthenticationEntryPoint authenticationEntryPoint;
     @Autowired
     private AccessDeniedHandler accessDeniedHandler;
+
+    private static final String[] PERMIT_ALL_ANT_PATTERNS = {
+            "/favicon.ico",
+            "/actuator/**"
+    };
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
@@ -36,7 +40,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http.requestMatchers().antMatchers("/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").authenticated();
+                .antMatchers(PERMIT_ALL_ANT_PATTERNS).permitAll()
+                .anyRequest().authenticated();
     }
 
     @Bean
