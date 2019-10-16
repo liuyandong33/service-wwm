@@ -43,4 +43,5 @@ dependencies {
     compile("commons-io:commons-io:2.6")
     compile("com.networknt:json-schema-validator:0.1.13")
     compile("org.apache.commons:commons-collections4:4.4")
+    compile("commons-beanutils:commons-beanutils:1.9.4")
 }

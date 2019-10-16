@@ -1106,4 +1106,8 @@ public class ApplicationHandler {
             throw new RuntimeException(e);
         }
     }
+
+    public static void registerConverters() {
+
+    }
 }
