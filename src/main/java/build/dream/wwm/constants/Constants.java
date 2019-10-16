@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.UUID;
 
 public class Constants {
     /**
@@ -114,4 +115,19 @@ public class Constants {
     public static final String PARTITION_REDIS_HOST = "partition.redis.host";
     public static final String PARTITION_REDIS_PORT = "partition.redis.port";
     public static final String PARTITION_REDIS_PASSWORD = "partition.redis.password";
+
+    public static final String CONTENT_TYPE_APPLICATION_FORM_URLENCODED_UTF8 = "application/x-www-form-urlencoded;charset=UTF-8";
+    public static final String CONTENT_TYPE_APPLICATION_JSON_UTF8 = "application/json;charset=UTF-8";
+    public static final String CONTENT_TYPE_MULTIPART_FORM_DATA_UTF8 = "multipart/form-data;boundary=" + UUID.randomUUID().toString() + ";charset=UTF-8";
+
+    public static final String REQUEST_METHOD_GET = "GET";
+    public static final String REQUEST_METHOD_HEAD = "HEAD";
+    public static final String REQUEST_METHOD_POST = "POST";
+    public static final String REQUEST_METHOD_PUT = "PUT";
+    public static final String REQUEST_METHOD_PATCH = "PATCH";
+    public static final String REQUEST_METHOD_DELETE = "DELETE";
+    public static final String REQUEST_METHOD_OPTIONS = "OPTIONS";
+    public static final String REQUEST_METHOD_TRACE = "TRACE";
+
+    public static final String LOG_STACK_INFO = "log.stack.info";
 }

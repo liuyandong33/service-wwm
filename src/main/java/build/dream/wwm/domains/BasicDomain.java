@@ -13,10 +13,10 @@ import java.lang.reflect.Type;
 import java.math.BigInteger;
 import java.util.Date;
 
-public class BasicDomain implements IdDomain<BigInteger>, Serializable, Cloneable {
+public class BasicDomain implements IdDomain<Long>, Serializable, Cloneable {
     @Id(strategy = GenerationStrategy.AUTO_INCREMENT)
     @UpdateIgnore
-    private BigInteger id;
+    private Long id;
 
     @InsertIgnore
     @UpdateIgnore
@@ -92,12 +92,12 @@ public class BasicDomain implements IdDomain<BigInteger>, Serializable, Cloneabl
     }
 
     @Override
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
     @Override
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -135,7 +135,7 @@ public class BasicDomain implements IdDomain<BigInteger>, Serializable, Cloneabl
             instance = ObjectUtils.newInstance(domainClass);
         }
 
-        public BT id(BigInteger id) {
+        public BT id(Long id) {
             instance.setId(id);
             return (BT) this;
         }

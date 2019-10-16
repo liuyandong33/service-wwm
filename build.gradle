@@ -46,4 +46,5 @@ dependencies {
     compile("commons-beanutils:commons-beanutils:1.9.4")
     // https://mvnrepository.com/artifact/org.apache.commons/commons-pool2
     compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.7.0'
+    compile("org.aspectj:aspectjweaver:1.9.2")
 }

@@ -81,3 +81,27 @@ CREATE TABLE sys_privilege
     deleted_time DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '删除时间，只有当 deleted = 1 时有意义，默认值为1970-01-01 00:00:00',
     deleted TINYINT NOT NULL DEFAULT 0 COMMENT '是否删除，0-未删除，1-已删除'
 ) COMMENT '系统权限';
+
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user`
+(
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    `name` VARCHAR(20) NOT NULL COMMENT '员工姓名',
+    mobile VARCHAR(20) NOT NULL COMMENT '手机号码',
+    email VARCHAR(20) NOT NULL COMMENT '邮箱',
+    `login_name` VARCHAR(20) NOT NULL COMMENT '登录名',
+    user_type TINYINT NOT NULL COMMENT '员工类型，1-商户主账号，2-商户员工，3-代理商',
+    `password` VARCHAR(50) NOT NULL COMMENT '登录密码',
+    water_works_id BIGINT NOT NULL COMMENT '水厂ID',
+    account_non_expired TINYINT NOT NULL DEFAULT 1 COMMENT '账户是否没有过期，1-没有过期，0-已经过期',
+    account_non_locked TINYINT NOT NULL DEFAULT 1 COMMENT '账户是否没有锁定，1-没有锁定，0-已经锁定',
+    credentials_non_expired TINYINT NOT NULL DEFAULT 1 COMMENT '账户凭证是否没有过期，1-没有过期，0-已经过期',
+    enabled TINYINT NOT NULL DEFAULT 1 COMMENT '账户是否启用，1-启用，0-禁用',
+    created_time DATETIME NOT NULL DEFAULT NOW() COMMENT '创建时间',
+    created_user_id BIGINT NOT NULL COMMENT '创建人id',
+    updated_time DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW() COMMENT '最后更新时间',
+    updated_user_id BIGINT NOT NULL COMMENT '最后更新人id',
+    updated_remark VARCHAR(255) NOT NULL COMMENT '最后更新备注',
+    deleted_time DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '删除时间，只有当 deleted = 1 时有意义，默认值为1970-01-01 00:00:00',
+    deleted TINYINT NOT NULL DEFAULT 0 COMMENT '是否删除，0-未删除，1-已删除'
+) COMMENT = '系统用户表';
