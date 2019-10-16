@@ -82,4 +82,7 @@ public class Constants {
 
     public static final String DEPLOYMENT_ENVIRONMENT = "deployment.environment";
     public static final String SERVICE_NAME = "service.name";
+
+    public static final String PUBLIC_KEY = "publicKey";
+    public static final String PRIVATE_KEY = "privateKey";
 }
