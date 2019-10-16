@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="build.dream.wwm.mappers.UniversalMapper">
+    <insert id="insertAutoIncrement" parameterType="java.lang.Object" useGeneratedKeys="true" keyProperty="id">
+        ${@build.dream.wwm.utils.DatabaseUtils@generateInsertSql(_parameter.getClass())}
+    </insert>
+
+    <insert id="insertAllAutoIncrement" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        <bind name="sql" value="@build.dream.wwm.utils.DatabaseUtils@generateInsertAllSql(list)"></bind>
+        ${sql[0]}
+        <foreach collection="list" index="index" item="item" separator=",">
+            ${sql[1]}
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="java.lang.Object">
+        ${@build.dream.wwm.utils.DatabaseUtils@generateInsertSql(_parameter.getClass())}
+    </insert>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        <bind name="sql" value="@build.dream.wwm.utils.DatabaseUtils@generateInsertAllSql(list)"></bind>
+        ${sql[0]}
+        <foreach collection="list" index="index" item="item" separator=",">
+            ${sql[1]}
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        <bind name="searchConditions" value="deleteModel.searchConditions"></bind>
+        <bind name="whereClause" value="deleteModel.whereClause"></bind>
+        <bind name="namedParameters" value="deleteModel.namedParameters"></bind>
+        DELETE FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
+    </delete>
+
+    <update id="update" parameterType="java.lang.Object">
+        ${@build.dream.wwm.utils.DatabaseUtils@generateUpdateSql(_parameter.getClass())}
+    </update>
+
+    <update id="universalUpdate">
+        <bind name="searchConditions" value="updateModel.searchConditions"></bind>
+        <bind name="whereClause" value="updateModel.whereClause"></bind>
+        <bind name="namedParameters" value="updateModel.namedParameters"></bind>
+        <bind name="contentValues" value="updateModel.contentValues"></bind>
+        UPDATE ${tableName} SET
+        <foreach collection="contentValues" index="index" item="contentValue" separator=",">
+            <if test="contentValue.symbolType == 1">
+                ${contentValue.columnName} = #{contentValue.value}
+            </if>
+            <if test="contentValue.symbolType == 2">
+                ${contentValue.columnName} = ${contentValue.value}
+            </if>
+            <if test="contentValue.symbolType == 3">
+                ${contentValue.columnName} = '${contentValue.value}'
+            </if>
+        </foreach>
+        <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
+    </update>
+
+    <update id="executeUpdate" parameterType="java.util.Map">
+        ${sql}
+    </update>
+
+    <select id="find" resultType="build.dream.wwm.utils.UnderscoreToCamelCaseMap">
+        <bind name="searchConditions" value="searchModel.searchConditions"></bind>
+        <bind name="whereClause" value="searchModel.whereClause"></bind>
+        <bind name="namedParameters" value="searchModel.namedParameters"></bind>
+        <bind name="groupBy" value="searchModel.groupBy"></bind>
+        <bind name="orderBy" value="searchModel.orderBy"></bind>
+        <bind name="forUpdate" value="searchModel.forUpdate"></bind>
+        SELECT ${columns} FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+            GROUP BY ${groupBy}
+        </if>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="forUpdate">
+            FOR UPDATE
+        </if>
+    </select>
+
+    <select id="findAll" resultType="build.dream.wwm.utils.UnderscoreToCamelCaseMap">
+        <bind name="searchConditions" value="searchModel.searchConditions"></bind>
+        <bind name="whereClause" value="searchModel.whereClause"></bind>
+        <bind name="namedParameters" value="searchModel.namedParameters"></bind>
+        <bind name="groupBy" value="searchModel.groupBy"></bind>
+        <bind name="orderBy" value="searchModel.orderBy"></bind>
+        <bind name="forUpdate" value="searchModel.forUpdate"></bind>
+        SELECT ${columns} FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+            GROUP BY ${groupBy}
+        </if>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+            ORDER BY ${orderBy}
+        </if>
+        <if test="forUpdate">
+            FOR UPDATE
+        </if>
+    </select>
+
+    <select id="count" resultType="long">
+        <bind name="searchConditions" value="searchModel.searchConditions"></bind>
+        <bind name="whereClause" value="searchModel.whereClause"></bind>
+        <bind name="namedParameters" value="searchModel.namedParameters"></bind>
+        SELECT COUNT(1) FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
+    </select>
+
+    <select id="universalCount" parameterType="java.util.Map" resultType="long">
+        ${sql}
+    </select>
+
+    <select id="pagedCount" resultType="long">
+        <bind name="searchConditions" value="pagedSearchModel.searchConditions"></bind>
+        <bind name="whereClause" value="pagedSearchModel.whereClause"></bind>
+        <bind name="namedParameters" value="pagedSearchModel.namedParameters"></bind>
+        SELECT COUNT(1) FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
+    </select>
+
+    <select id="findAllPaged" resultType="build.dream.wwm.utils.UnderscoreToCamelCaseMap" databaseId="mysql">
+        <bind name="searchConditions" value="pagedSearchModel.searchConditions"></bind>
+        <bind name="whereClause" value="pagedSearchModel.whereClause"></bind>
+        <bind name="namedParameters" value="pagedSearchModel.namedParameters"></bind>
+        <bind name="groupBy" value="pagedSearchModel.groupBy"></bind>
+        <bind name="orderBy" value="pagedSearchModel.orderBy"></bind>
+        <bind name="offset" value="pagedSearchModel.offset"></bind>
+        <bind name="maxResults" value="pagedSearchModel.maxResults"></bind>
+        SELECT ${columns} FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+            GROUP BY ${groupBy}
+        </if>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+            ORDER BY ${orderBy}
+        </if>
+        LIMIT #{offset}, #{maxResults}
+    </select>
+
+    <select id="findAllPaged" resultType="build.dream.wwm.utils.UnderscoreToCamelCaseMap" databaseId="oracle">
+        <bind name="searchConditions" value="pagedSearchModel.searchConditions"></bind>
+        <bind name="whereClause" value="pagedSearchModel.whereClause"></bind>
+        <bind name="namedParameters" value="pagedSearchModel.namedParameters"></bind>
+        <bind name="groupBy" value="pagedSearchModel.groupBy"></bind>
+        <bind name="orderBy" value="pagedSearchModel.orderBy"></bind>
+        <bind name="startRowNumber" value="pagedSearchModel.startRowNumber"></bind>
+        <bind name="endRowNumber" value="pagedSearchModel.endRowNumber"></bind>
+        SELECT ${columns} FROM (SELECT ROWNUM AS rowno, ${columns} FROM ${tableName}
+        <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
+        <if test="@org.apache.commons.collections.CollectionUtils@isEmpty(searchConditions) and @org.apache.commons.lang.StringUtils@isBlank(whereClause)">
+            WHERE ROWNUM &lt; #{endRowNumber}
+        </if>
+        <if test="@org.apache.commons.collections.CollectionUtils@isNotEmpty(searchConditions) or @org.apache.commons.lang.StringUtils@isNotBlank(whereClause)">
+            AND ROWNUM &lt; #{endRowNumber}
+        </if>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+            GROUP BY ${groupBy}
+        </if>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+            ORDER BY ${orderBy}
+        </if>) t WHERE t.rowno &gt; #{startRowNumber}
+    </select>
+
+    <select id="findAllPaged" resultType="build.dream.wwm.utils.UnderscoreToCamelCaseMap" databaseId="sql_server">
+        <bind name="searchConditions" value="pagedSearchModel.searchConditions"></bind>
+        <bind name="whereClause" value="pagedSearchModel.whereClause"></bind>
+        <bind name="namedParameters" value="pagedSearchModel.namedParameters"></bind>
+        <bind name="groupBy" value="pagedSearchModel.groupBy"></bind>
+        <bind name="orderBy" value="pagedSearchModel.orderBy"></bind>
+        <bind name="offset" value="pagedSearchModel.offset"></bind>
+        <bind name="maxResults" value="pagedSearchModel.maxResults"></bind>
+        SELECT ${columns} FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+            GROUP BY ${groupBy}
+        </if>
+        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+            ORDER BY ${orderBy}
+        </if>
+        OFFSET #{offset} ROWS FETCH NEXT #{maxResults} ROWS ONLY
+    </select>
+
+    <select id="executeQuery" parameterType="java.util.Map" resultType="build.dream.wwm.utils.UnderscoreToCamelCaseMap">
+        ${sql}
+    </select>
+
+    <select id="executeUniqueResultQuery" parameterType="java.util.Map" resultType="build.dream.wwm.utils.UnderscoreToCamelCaseMap">
+        ${sql}
+    </select>
+</mapper>
