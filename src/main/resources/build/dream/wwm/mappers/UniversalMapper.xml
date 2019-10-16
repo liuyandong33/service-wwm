@@ -68,10 +68,10 @@
         <bind name="orderBy" value="searchModel.orderBy"></bind>
         <bind name="forUpdate" value="searchModel.forUpdate"></bind>
         SELECT ${columns} FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(groupBy)">
             GROUP BY ${groupBy}
         </if>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderBy)">
             ORDER BY ${orderBy}
         </if>
         <if test="forUpdate">
@@ -87,10 +87,10 @@
         <bind name="orderBy" value="searchModel.orderBy"></bind>
         <bind name="forUpdate" value="searchModel.forUpdate"></bind>
         SELECT ${columns} FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(groupBy)">
             GROUP BY ${groupBy}
         </if>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderBy)">
             ORDER BY ${orderBy}
         </if>
         <if test="forUpdate">
@@ -125,10 +125,10 @@
         <bind name="offset" value="pagedSearchModel.offset"></bind>
         <bind name="maxResults" value="pagedSearchModel.maxResults"></bind>
         SELECT ${columns} FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(groupBy)">
             GROUP BY ${groupBy}
         </if>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderBy)">
             ORDER BY ${orderBy}
         </if>
         LIMIT #{offset}, #{maxResults}
@@ -144,16 +144,16 @@
         <bind name="endRowNumber" value="pagedSearchModel.endRowNumber"></bind>
         SELECT ${columns} FROM (SELECT ROWNUM AS rowno, ${columns} FROM ${tableName}
         <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
-        <if test="@org.apache.commons.collections.CollectionUtils@isEmpty(searchConditions) and @org.apache.commons.lang.StringUtils@isBlank(whereClause)">
+        <if test="@org.apache.commons.collections.CollectionUtils@isEmpty(searchConditions) and @org.apache.commons.lang3.StringUtils@isBlank(whereClause)">
             WHERE ROWNUM &lt; #{endRowNumber}
         </if>
-        <if test="@org.apache.commons.collections.CollectionUtils@isNotEmpty(searchConditions) or @org.apache.commons.lang.StringUtils@isNotBlank(whereClause)">
+        <if test="@org.apache.commons.collections.CollectionUtils@isNotEmpty(searchConditions) or @org.apache.commons.lang3.StringUtils@isNotBlank(whereClause)">
             AND ROWNUM &lt; #{endRowNumber}
         </if>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(groupBy)">
             GROUP BY ${groupBy}
         </if>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderBy)">
             ORDER BY ${orderBy}
         </if>) t WHERE t.rowno &gt; #{startRowNumber}
     </select>
@@ -167,10 +167,10 @@
         <bind name="offset" value="pagedSearchModel.offset"></bind>
         <bind name="maxResults" value="pagedSearchModel.maxResults"></bind>
         SELECT ${columns} FROM ${tableName} <include refid="build.dream.wwm.mappers.CommonMapper.searchConditionSql"></include>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(groupBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(groupBy)">
             GROUP BY ${groupBy}
         </if>
-        <if test="@org.apache.commons.lang.StringUtils@isNotBlank(orderBy)">
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderBy)">
             ORDER BY ${orderBy}
         </if>
         OFFSET #{offset} ROWS FETCH NEXT #{maxResults} ROWS ONLY

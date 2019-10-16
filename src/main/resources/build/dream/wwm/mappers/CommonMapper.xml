@@ -6,22 +6,22 @@
             WHERE
             <foreach collection="searchConditions" index="index" item="searchCondition" separator=" AND ">
                 <choose>
-                    <when test="@org.apache.commons.lang.StringUtils@equalsIgnoreCase(searchCondition.operationSymbol, 'IN')">
+                    <when test="@org.apache.commons.lang3.StringUtils@equalsIgnoreCase(searchCondition.operationSymbol, 'IN')">
                         ${searchCondition.columnName} ${searchCondition.operationSymbol}
                         <foreach collection="searchCondition.searchParameter" index="index" item="item" open="(" separator="," close=")">
                             #{item}
                         </foreach>
                     </when>
-                    <when test="@org.apache.commons.lang.StringUtils@equalsIgnoreCase(searchCondition.operationSymbol, 'NOT IN')">
+                    <when test="@org.apache.commons.lang3.StringUtils@equalsIgnoreCase(searchCondition.operationSymbol, 'NOT IN')">
                         ${searchCondition.columnName} ${searchCondition.operationSymbol}
                         <foreach collection="searchCondition.searchParameter" index="index" item="item" open="(" separator="," close=")">
                             #{item}
                         </foreach>
                     </when>
-                    <when test="@org.apache.commons.lang.StringUtils@equalsIgnoreCase(searchCondition.operationSymbol, 'IS NULL')">
+                    <when test="@org.apache.commons.lang3.StringUtils@equalsIgnoreCase(searchCondition.operationSymbol, 'IS NULL')">
                         ${searchCondition.columnName} IS NULL
                     </when>
-                    <when test="@org.apache.commons.lang.StringUtils@equalsIgnoreCase(searchCondition.operationSymbol, 'IS NOT NULL')">
+                    <when test="@org.apache.commons.lang3.StringUtils@equalsIgnoreCase(searchCondition.operationSymbol, 'IS NOT NULL')">
                         ${searchCondition.columnName} IS NOT NULL
                     </when>
                     <otherwise>
@@ -29,11 +29,11 @@
                     </otherwise>
                 </choose>
             </foreach>
-            <if test="@org.apache.commons.lang.StringUtils@isNotBlank(whereClause)">
+            <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(whereClause)">
                 AND ${@build.dream.wwm.utils.DatabaseUtils@obtainWhereClause(whereClause)}
             </if>
         </if>
-        <if test="@org.apache.commons.collections.CollectionUtils@isEmpty(searchConditions) and @org.apache.commons.lang.StringUtils@isNotBlank(whereClause)">
+        <if test="@org.apache.commons.collections.CollectionUtils@isEmpty(searchConditions) and @org.apache.commons.lang3.StringUtils@isNotBlank(whereClause)">
             WHERE ${@build.dream.wwm.utils.DatabaseUtils@obtainWhereClause(whereClause)}
         </if>
     </sql>

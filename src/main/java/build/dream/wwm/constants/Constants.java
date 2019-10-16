@@ -100,4 +100,18 @@ public class Constants {
     public static final BigDecimal DECIMAL_DEFAULT_VALUE = BigDecimal.ZERO;
     public static final Date DATETIME_DEFAULT_VALUE = CustomDateUtils.parse("1970-01-01 00:00:00", DEFAULT_DATE_PATTERN);
     public static final String VARCHAR_DEFAULT_VALUE = "";
+
+    public static final String REDIS_TEMPLATE = "redisTemplate";
+    public static final String COMMON_STRING_REDIS_TEMPLATE = "commonStringRedisTemplate";
+    public static final String PARTITION_STRING_REDIS_TEMPLATE = "partitionStringRedisTemplate";
+    public static final String COMMON_REDIS_CONNECTION_FACTORY = "commonRedisConnectionFactory";
+    public static final String PARTITION_REDIS_CONNECTION_FACTORY = "partitionRedisConnectionFactory";
+
+    public static final String COMMON_REDIS_HOST = "common.redis.host";
+    public static final String COMMON_REDIS_PORT = "common.redis.port";
+    public static final String COMMON_REDIS_PASSWORD = "common.redis.password";
+
+    public static final String PARTITION_REDIS_HOST = "partition.redis.host";
+    public static final String PARTITION_REDIS_PORT = "partition.redis.port";
+    public static final String PARTITION_REDIS_PASSWORD = "partition.redis.password";
 }
