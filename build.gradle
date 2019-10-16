@@ -1,0 +1,42 @@
+group "build.dream"
+version "0.1.0"
+
+buildscript {
+    ext {
+        springBootVersion = "2.0.0.RELEASE"
+        projectName = "service-wwm"
+    }
+    repositories {
+        mavenLocal()
+        maven { url "${mavenPublicRepositoryUrl}" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: "java"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "idea"
+apply plugin: "maven-publish"
+
+repositories {
+    mavenLocal()
+    maven { url "${mavenPublicRepositoryUrl}" }
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, "seconds"
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.security.oauth:spring-security-oauth2:2.3.2.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-data-redis")
+    compile("org.apache.tomcat.embed:tomcat-embed-jasper")
+    compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0")
+    compile("mysql:mysql-connector-java:6.0.6")
+    compile("com.alibaba:druid:1.1.9")
+}
