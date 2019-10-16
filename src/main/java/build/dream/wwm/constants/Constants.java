@@ -1,6 +1,11 @@
 package build.dream.wwm.constants;
 
+import build.dream.wwm.utils.CustomDateUtils;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.util.Date;
 
 public class Constants {
     /**
@@ -85,4 +90,14 @@ public class Constants {
 
     public static final String PUBLIC_KEY = "publicKey";
     public static final String PRIVATE_KEY = "privateKey";
+
+    /**
+     * 数据库默认值
+     */
+    public static final int TINYINT_DEFAULT_VALUE = 0;
+    public static final int INT_DEFAULT_VALUE = 0;
+    public static final BigInteger BIGINT_DEFAULT_VALUE = BigInteger.ZERO;
+    public static final BigDecimal DECIMAL_DEFAULT_VALUE = BigDecimal.ZERO;
+    public static final Date DATETIME_DEFAULT_VALUE = CustomDateUtils.parse("1970-01-01 00:00:00", DEFAULT_DATE_PATTERN);
+    public static final String VARCHAR_DEFAULT_VALUE = "";
 }
