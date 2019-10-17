@@ -50,16 +50,16 @@ DROP TABLE IF EXISTS user_role_r;
 CREATE TABLE user_role_r
 (
     user_id BIGINT NOT NULL COMMENT 'user id',
-    pos_role_id BIGINT NOT NULL COMMENT 'pos role id',
-    PRIMARY KEY (user_id, pos_role_id)
+    role_id BIGINT NOT NULL COMMENT 'role id',
+    PRIMARY KEY (user_id, role_id)
 ) COMMENT '系统用户与系统角色中间表';
 
 DROP TABLE IF EXISTS role_privilege_r;
 CREATE TABLE role_privilege_r
 (
-    pos_role_id BIGINT NOT NULL COMMENT 'background id',
+    role_id BIGINT NOT NULL COMMENT 'role id',
     privilege_id BIGINT NOT NULL COMMENT 'privilege id',
-    PRIMARY KEY (pos_role_id, privilege_id)
+    PRIMARY KEY (role_id, privilege_id)
 ) COMMENT '系统角色与系统权限中间表';
 
 DROP TABLE IF EXISTS sys_privilege;

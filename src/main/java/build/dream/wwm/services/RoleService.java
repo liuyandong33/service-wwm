@@ -4,17 +4,16 @@ import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.SysRole;
 import build.dream.wwm.models.role.ListRolesModel;
+import build.dream.wwm.models.role.SaveRoleModel;
 import build.dream.wwm.orm.PagedSearchModel;
 import build.dream.wwm.orm.SearchCondition;
 import build.dream.wwm.orm.SearchModel;
 import build.dream.wwm.utils.DatabaseHelper;
+import build.dream.wwm.utils.ValidateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class RoleService {
@@ -54,5 +53,48 @@ public class RoleService {
         data.put("total", count);
         data.put("rows", sysRoles);
         return ApiRest.builder().data(sysRoles).message("查询角色信息成功！").successful(true).build();
+    }
+
+    /**
+     * 保存角色
+     *
+     * @param saveRoleModel
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ApiRest saveRole(SaveRoleModel saveRoleModel) {
+        Long waterWorksId = saveRoleModel.obtainWaterWorksId();
+        Long userId = saveRoleModel.obtainUserId();
+        Long id = saveRoleModel.getId();
+        String roleCode = saveRoleModel.getRoleCode();
+        String roleName = saveRoleModel.getRoleName();
+        List<Long> privilegeIds = saveRoleModel.getPrivilegeIds();
+
+        SysRole sysRole = null;
+        if (Objects.isNull(id)) {
+            sysRole = SysRole.builder()
+                    .waterWorksId(waterWorksId)
+                    .roleCode(roleCode)
+                    .roleName(roleName)
+                    .createdUserId(userId)
+                    .updatedUserId(userId)
+                    .updatedRemark("新增角色！")
+                    .build();
+            DatabaseHelper.insert(sysRole);
+        } else {
+            SearchModel searchModel = SearchModel.builder()
+                    .autoSetDeletedFalse()
+                    .addSearchCondition(SysRole.ColumnName.WATER_WORKS_ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, waterWorksId)
+                    .addSearchCondition(SysRole.ColumnName.ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, id)
+                    .build();
+            sysRole = DatabaseHelper.find(SysRole.class, searchModel);
+            ValidateUtils.notNull(sysRole, "角色不存在！");
+
+            sysRole.setRoleName(roleName);
+            sysRole.setUpdatedUserId(userId);
+            sysRole.setUpdatedRemark("修改角色信息！");
+            DatabaseHelper.update(sysRole);
+        }
+        return ApiRest.builder().data(sysRole).message("保存角色信息成功！").successful(true).build();
     }
 }
