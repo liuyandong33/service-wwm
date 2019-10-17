@@ -24,10 +24,27 @@ public class RoleController {
         return null;
     }
 
+    /**
+     * 保存角色信息
+     *
+     * @return
+     */
     @RequestMapping(value = "/saveRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @ApiRestAction(modelClass = SaveRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "saveRole", error = "保存角色失败")
     public String saveRole() {
+        return null;
+    }
+
+    /**
+     * 删除角色
+     *
+     * @return
+     */
+    @RequestMapping(value = "/deleteRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = SaveRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "deleteRole", error = "删除角色失败")
+    public String deleteRole() {
         return null;
     }
 }

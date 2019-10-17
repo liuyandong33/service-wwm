@@ -3,6 +3,7 @@ package build.dream.wwm.services;
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.SysRole;
+import build.dream.wwm.models.role.DeleteRoleModel;
 import build.dream.wwm.models.role.ListRolesModel;
 import build.dream.wwm.models.role.SaveRoleModel;
 import build.dream.wwm.orm.PagedSearchModel;
@@ -96,5 +97,20 @@ public class RoleService {
             DatabaseHelper.update(sysRole);
         }
         return ApiRest.builder().data(sysRole).message("保存角色信息成功！").successful(true).build();
+    }
+
+    /**
+     * 删除角色
+     *
+     * @param deleteRoleModel
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ApiRest deleteRole(DeleteRoleModel deleteRoleModel) {
+        Long waterWorksId = deleteRoleModel.obtainWaterWorksId();
+        Long userId = deleteRoleModel.obtainUserId();
+        Long id = deleteRoleModel.getId();
+
+        return null;
     }
 }
