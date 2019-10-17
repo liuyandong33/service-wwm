@@ -176,6 +176,7 @@ public class RoleService {
             zTreeNode.setId(sysPrivilege.getId().toString());
             zTreeNode.setName(sysPrivilege.getPrivilegeName());
             zTreeNode.setPId(sysPrivilege.getParentId().toString());
+            zTreeNode.setOpen(true);
             return zTreeNode;
         }).collect(Collectors.toList());
 

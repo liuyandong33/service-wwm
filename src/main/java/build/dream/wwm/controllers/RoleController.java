@@ -61,4 +61,9 @@ public class RoleController {
     public String obtainRoleInfo() {
         return null;
     }
+
+    @RequestMapping(value = "/index")
+    public String index() {
+        return "privilege/index";
+    }
 }

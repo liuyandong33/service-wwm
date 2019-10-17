@@ -1,9 +1,13 @@
 package build.dream.wwm.beans;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ZTreeNode {
     private String id;
     private String name;
+    @JsonProperty(value = "pId")
     private String pId;
+    private boolean open;
 
     public ZTreeNode() {
 
@@ -37,5 +41,13 @@ public class ZTreeNode {
 
     public void setPId(String pId) {
         this.pId = pId;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 }
