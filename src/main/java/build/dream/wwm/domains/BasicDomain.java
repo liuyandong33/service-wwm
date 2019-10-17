@@ -10,7 +10,6 @@ import build.dream.wwm.utils.ObjectUtils;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.math.BigInteger;
 import java.util.Date;
 
 public class BasicDomain implements IdDomain<Long>, Serializable, Cloneable {
@@ -21,12 +20,12 @@ public class BasicDomain implements IdDomain<Long>, Serializable, Cloneable {
     @InsertIgnore
     @UpdateIgnore
     private Date createdTime;
-    private BigInteger createdUserId;
+    private Long createdUserId;
 
     @InsertIgnore
     @UpdateIgnore
     private Date updatedTime;
-    private BigInteger updatedUserId;
+    private Long updatedUserId;
     private String updatedRemark = Constants.VARCHAR_DEFAULT_VALUE;
 
     @InsertIgnore
@@ -43,11 +42,11 @@ public class BasicDomain implements IdDomain<Long>, Serializable, Cloneable {
         this.createdTime = createdTime;
     }
 
-    public BigInteger getCreatedUserId() {
+    public Long getCreatedUserId() {
         return createdUserId;
     }
 
-    public void setCreatedUserId(BigInteger createdUserId) {
+    public void setCreatedUserId(Long createdUserId) {
         this.createdUserId = createdUserId;
     }
 
@@ -59,11 +58,11 @@ public class BasicDomain implements IdDomain<Long>, Serializable, Cloneable {
         this.updatedTime = updatedTime;
     }
 
-    public BigInteger getUpdatedUserId() {
+    public Long getUpdatedUserId() {
         return updatedUserId;
     }
 
-    public void setUpdatedUserId(BigInteger updatedUserId) {
+    public void setUpdatedUserId(Long updatedUserId) {
         this.updatedUserId = updatedUserId;
     }
 
@@ -145,7 +144,7 @@ public class BasicDomain implements IdDomain<Long>, Serializable, Cloneable {
             return (BT) this;
         }
 
-        public BT createdUserId(BigInteger createdUserId) {
+        public BT createdUserId(Long createdUserId) {
             instance.setCreatedUserId(createdUserId);
             return (BT) this;
         }
@@ -155,7 +154,7 @@ public class BasicDomain implements IdDomain<Long>, Serializable, Cloneable {
             return (BT) this;
         }
 
-        public BT updatedUserId(BigInteger updatedUserId) {
+        public BT updatedUserId(Long updatedUserId) {
             instance.setUpdatedUserId(updatedUserId);
             return (BT) this;
         }

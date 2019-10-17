@@ -16,6 +16,9 @@ public class SaveOrganizationModel extends UserBasicModel {
     @Length(max = 20)
     private String name;
 
+    @NotNull
+    private Long parentId;
+
     public Long getId() {
         return id;
     }
@@ -38,5 +41,13 @@ public class SaveOrganizationModel extends UserBasicModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 }

@@ -13,11 +13,11 @@ public class Organization extends BasicDomain {
     /**
      * 水厂ID
      */
-    private long waterWorksId;
+    private Long waterWorksId;
     /**
      * 上级机构ID
      */
-    private long parentId;
+    private Long parentId;
 
     public String getCode() {
         return code;
@@ -35,19 +35,19 @@ public class Organization extends BasicDomain {
         this.name = name;
     }
 
-    public long getWaterWorksId() {
+    public Long getWaterWorksId() {
         return waterWorksId;
     }
 
-    public void setWaterWorksId(long waterWorksId) {
+    public void setWaterWorksId(Long waterWorksId) {
         this.waterWorksId = waterWorksId;
     }
 
-    public long getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(long parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
@@ -62,12 +62,12 @@ public class Organization extends BasicDomain {
             return this;
         }
 
-        public Builder waterWorksId(long waterWorksId) {
+        public Builder waterWorksId(Long waterWorksId) {
             instance.setWaterWorksId(waterWorksId);
             return this;
         }
 
-        public Builder parentId(long parentId) {
+        public Builder parentId(Long parentId) {
             instance.setParentId(parentId);
             return this;
         }

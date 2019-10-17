@@ -1,14 +1,14 @@
 package build.dream.wwm.models;
 
 public class UserBasicModel extends BasicModel {
-    private long _waterWorksId;
-    private long _userId;
+    private Long _waterWorksId;
+    private Long _userId;
 
-    public long obtainWaterWorksId() {
+    public Long obtainWaterWorksId() {
         return _waterWorksId;
     }
 
-    public long obtainUserId() {
+    public Long obtainUserId() {
         return _userId;
     }
 }
