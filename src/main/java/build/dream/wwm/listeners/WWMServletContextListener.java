@@ -6,7 +6,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
 
 @WebListener
-public class WwmServletContextListener extends BasicServletContextListener {
+public class WWMServletContextListener extends BasicServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         super.contextInitialized(servletContextEvent);

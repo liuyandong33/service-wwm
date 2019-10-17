@@ -130,4 +130,8 @@ public class Constants {
     public static final String REQUEST_METHOD_TRACE = "TRACE";
 
     public static final String LOG_STACK_INFO = "log.stack.info";
+
+    public static final String AUTHENTICATED = "authenticated";
+    public static final String PERMIT_ALL = "permitAll";
+    public static final String HAS_AUTHORITY_FORMAT = "hasAuthority('%s')";
 }
