@@ -4,6 +4,7 @@ import build.dream.wwm.annotations.ApiRestAction;
 import build.dream.wwm.models.role.AddRoleModel;
 import build.dream.wwm.models.role.DeleteRoleModel;
 import build.dream.wwm.models.role.ListRolesModel;
+import build.dream.wwm.models.role.ObtainRoleInfoModel;
 import build.dream.wwm.services.RoleService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,18 @@ public class RoleController {
     @ResponseBody
     @ApiRestAction(modelClass = DeleteRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "deleteRole", error = "删除角色失败")
     public String deleteRole() {
+        return null;
+    }
+
+    /**
+     * 获取角色信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/obtainRoleInfo", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = ObtainRoleInfoModel.class, serviceClass = RoleService.class, serviceMethodName = "obtainRoleInfo", error = "获取角色信息失败")
+    public String obtainRoleInfo() {
         return null;
     }
 }

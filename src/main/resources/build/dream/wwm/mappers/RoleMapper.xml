@@ -11,4 +11,12 @@
             (#{roleId}, #{privilegeId})
         </foreach>
     </insert>
+
+    <select id="obtainRolePrivileges" resultType="build.dream.wwm.domains.SysPrivilege">
+        SELECT
+        *
+        FROM sys_privilege
+        INNER JOIN role_privilege_r ON role_privilege_r.privilege_id = sys_privilege.id AND role_privilege_r.role_id = #{roleId}
+        WHERE sys_privilege.deleted = 0
+    </select>
 </mapper>
