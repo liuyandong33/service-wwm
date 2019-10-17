@@ -1,9 +1,10 @@
 package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
+import build.dream.wwm.models.organization.AddOrganizationModel;
 import build.dream.wwm.models.organization.DeleteOrganizationModel;
 import build.dream.wwm.models.organization.ObtainAllOrganizationsModel;
-import build.dream.wwm.models.organization.SaveOrganizationModel;
+import build.dream.wwm.models.organization.UpdateOrganizationModel;
 import build.dream.wwm.services.OrganizationService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -26,14 +27,26 @@ public class OrganizationController {
     }
 
     /**
-     * 保存机构信息
+     * 新增机构信息
      *
      * @return
      */
-    @RequestMapping(value = "/saveOrganization", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/addOrganization", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    @ApiRestAction(modelClass = SaveOrganizationModel.class, serviceClass = OrganizationService.class, serviceMethodName = "saveOrganization", error = "保存机构信息失败")
+    @ApiRestAction(modelClass = AddOrganizationModel.class, serviceClass = OrganizationService.class, serviceMethodName = "addOrganization", error = "新增机构信息失败")
     public String saveOrganization() {
+        return null;
+    }
+
+    /**
+     * 修改机构信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/updateOrganization", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = UpdateOrganizationModel.class, serviceClass = OrganizationService.class, serviceMethodName = "updateOrganization", error = "修改机构信息失败")
+    public String updateOrganization() {
         return null;
     }
 

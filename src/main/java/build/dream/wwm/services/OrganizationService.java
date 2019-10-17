@@ -4,9 +4,10 @@ import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.beans.ZTreeNode;
 import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.Organization;
+import build.dream.wwm.models.organization.AddOrganizationModel;
 import build.dream.wwm.models.organization.DeleteOrganizationModel;
 import build.dream.wwm.models.organization.ObtainAllOrganizationsModel;
-import build.dream.wwm.models.organization.SaveOrganizationModel;
+import build.dream.wwm.models.organization.UpdateOrganizationModel;
 import build.dream.wwm.orm.SearchModel;
 import build.dream.wwm.utils.DatabaseHelper;
 import build.dream.wwm.utils.ValidateUtils;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,45 +48,58 @@ public class OrganizationService {
     }
 
     /**
-     * 保存机构信息
+     * 新增机构信息
      *
-     * @param saveOrganizationModel
+     * @param addOrganizationModel
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public ApiRest saveOrganization(SaveOrganizationModel saveOrganizationModel) {
-        Long userId = saveOrganizationModel.obtainUserId();
-        Long waterWorksId = saveOrganizationModel.obtainWaterWorksId();
-        Long id = saveOrganizationModel.getId();
-        String code = saveOrganizationModel.getCode();
-        String name = saveOrganizationModel.getName();
-        Long parentId = saveOrganizationModel.getParentId();
+    public ApiRest addOrganization(AddOrganizationModel addOrganizationModel) {
+        Long userId = addOrganizationModel.obtainUserId();
+        Long waterWorksId = addOrganizationModel.obtainWaterWorksId();
+        String code = addOrganizationModel.getCode();
+        String name = addOrganizationModel.getName();
+        Long parentId = addOrganizationModel.getParentId();
 
-        Organization organization = null;
-        if (Objects.isNull(id)) {
-            organization = Organization.builder()
-                    .code(code)
-                    .name(name)
-                    .parentId(parentId)
-                    .createdUserId(userId)
-                    .updatedUserId(userId)
-                    .updatedRemark("新增机构信息！")
-                    .build();
-            DatabaseHelper.insert(organization);
-        } else {
-            SearchModel searchModel = SearchModel.builder()
-                    .autoSetDeletedFalse()
-                    .addSearchCondition(Organization.ColumnName.ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, id)
-                    .addSearchCondition(Organization.ColumnName.WATER_WORKS_ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, waterWorksId)
-                    .build();
-            organization = DatabaseHelper.find(Organization.class, searchModel);
-            ValidateUtils.notNull(organization, "机构不存在！");
+        Organization organization = Organization.builder()
+                .code(code)
+                .name(name)
+                .waterWorksId(waterWorksId)
+                .parentId(parentId)
+                .createdUserId(userId)
+                .updatedUserId(userId)
+                .updatedRemark("新增机构信息！")
+                .build();
+        DatabaseHelper.insert(organization);
+        return ApiRest.builder().data(organization).message("新增机构信息成功！").successful(true).build();
+    }
 
-            organization.setName(name);
-            organization.setParentId(parentId);
-            DatabaseHelper.update(organization);
-        }
-        return ApiRest.builder().data(organization).message("保存机构信息成功！").successful(true).build();
+    /**
+     * 修改机构信息
+     *
+     * @param updateOrganizationModel
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ApiRest updateOrganization(UpdateOrganizationModel updateOrganizationModel) {
+        Long userId = updateOrganizationModel.obtainUserId();
+        Long waterWorksId = updateOrganizationModel.obtainWaterWorksId();
+        Long id = updateOrganizationModel.getId();
+        String name = updateOrganizationModel.getName();
+
+        SearchModel searchModel = SearchModel.builder()
+                .autoSetDeletedFalse()
+                .addSearchCondition(Organization.ColumnName.ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, id)
+                .addSearchCondition(Organization.ColumnName.WATER_WORKS_ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, waterWorksId)
+                .build();
+        Organization organization = DatabaseHelper.find(Organization.class, searchModel);
+        ValidateUtils.notNull(organization, "机构不存在！");
+
+        organization.setName(name);
+        organization.setUpdatedUserId(userId);
+        organization.setUpdatedRemark("修改机构信息！");
+        DatabaseHelper.update(organization);
+        return ApiRest.builder().data(organization).message("修改机构信息成功！").successful(true).build();
     }
 
     /**
