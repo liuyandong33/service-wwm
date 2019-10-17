@@ -5,9 +5,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 
-public class SaveUserModel extends UserBasicModel {
-    private Long id;
-
+public class AddUserModel extends UserBasicModel {
     @NotNull
     @Length(max = 20)
     private String name;
@@ -23,14 +21,6 @@ public class SaveUserModel extends UserBasicModel {
     @NotNull
     @Length(max = 20)
     private String loginName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

@@ -1,8 +1,9 @@
 package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
+import build.dream.wwm.models.role.AddRoleModel;
+import build.dream.wwm.models.role.DeleteRoleModel;
 import build.dream.wwm.models.role.ListRolesModel;
-import build.dream.wwm.models.role.SaveRoleModel;
 import build.dream.wwm.services.RoleService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -25,14 +26,14 @@ public class RoleController {
     }
 
     /**
-     * 保存角色信息
+     * 新增角色信息
      *
      * @return
      */
-    @RequestMapping(value = "/saveRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/addRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    @ApiRestAction(modelClass = SaveRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "saveRole", error = "保存角色失败")
-    public String saveRole() {
+    @ApiRestAction(modelClass = AddRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "addRole", error = "新增角色失败")
+    public String addRole() {
         return null;
     }
 
@@ -43,7 +44,7 @@ public class RoleController {
      */
     @RequestMapping(value = "/deleteRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    @ApiRestAction(modelClass = SaveRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "deleteRole", error = "删除角色失败")
+    @ApiRestAction(modelClass = DeleteRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "deleteRole", error = "删除角色失败")
     public String deleteRole() {
         return null;
     }

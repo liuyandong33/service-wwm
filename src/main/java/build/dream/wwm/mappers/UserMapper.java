@@ -10,4 +10,8 @@ public interface UserMapper {
     SysUser findByLoginNameOrEmailOrMobile(@Param("loginName") String loginName);
 
     List<SysPrivilege> obtainAllPrivileges(@Param("userId") long userId);
+
+    long deleteAllRoles(@Param("userId") long userId);
+
+    long insetRoles(@Param("userId") long userId, @Param("roleIds") List<Long> roleIds);
 }

@@ -1,7 +1,10 @@
 package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
-import build.dream.wwm.models.role.ListRolesModel;
+import build.dream.wwm.models.role.DeleteUserModel;
+import build.dream.wwm.models.role.SetRolesModel;
+import build.dream.wwm.models.role.UpdateUserModel;
+import build.dream.wwm.models.user.AddUserModel;
 import build.dream.wwm.services.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,10 +19,46 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping(value = "/saveUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/addUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    @ApiRestAction(modelClass = ListRolesModel.class, serviceClass = UserService.class, serviceMethodName = "listRoles", error = "保存用户信息失败")
-    public String saveUser() {
+    @ApiRestAction(modelClass = AddUserModel.class, serviceClass = UserService.class, serviceMethodName = "addUser", error = "新增用户信息失败")
+    public String addUser() {
+        return null;
+    }
+
+    /**
+     * 保存用户信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/updateUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = UpdateUserModel.class, serviceClass = UserService.class, serviceMethodName = "updateUser", error = "修改用户信息失败")
+    public String updateUser() {
+        return null;
+    }
+
+    /**
+     * 删除用户信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/deleteUser", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = DeleteUserModel.class, serviceClass = UserService.class, serviceMethodName = "deleteUser", error = "删除用户信息失败")
+    public String deleteUser() {
+        return null;
+    }
+
+    /**
+     * 设置角色
+     *
+     * @return
+     */
+    @RequestMapping(value = "/setRoles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = SetRolesModel.class, serviceClass = UserService.class, serviceMethodName = "setRoles", error = "设置角色失败")
+    public String setRoles() {
         return null;
     }
 }

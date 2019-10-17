@@ -16,4 +16,15 @@
         WHERE id IN (SELECT privilege_id FROM role_privilege_r WHERE role_id IN (SELECT role_id FORM user_role_r WHERE user_id = #{userId}))
         AND deleted = 0
     </select>
+
+    <delete id="deleteAllRoles">
+        DELETE FROM user_role_r WHERE user_id = #{userId}
+    </delete>
+
+    <insert id="insetRoles">
+        INSERT INTO user_role_r (user_id, role_id) VALUES
+        <foreach collection="roleIds" index="index" item="roleId" separator=", ">
+            (#{userIds}, #{roleId})
+        </foreach>
+    </insert>
 </mapper>

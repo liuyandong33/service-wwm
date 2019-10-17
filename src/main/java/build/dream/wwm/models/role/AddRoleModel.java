@@ -7,9 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class SaveRoleModel extends UserBasicModel {
-    private Long id;
-
+public class AddRoleModel extends UserBasicModel {
     @NotNull
     @Length(max = 20)
     private String roleCode;
@@ -20,14 +18,6 @@ public class SaveRoleModel extends UserBasicModel {
 
     @NotEmpty
     private List<Long> privilegeIds;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getRoleCode() {
         return roleCode;
