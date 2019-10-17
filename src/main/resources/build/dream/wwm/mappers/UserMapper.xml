@@ -13,8 +13,9 @@
         SELECT
         *
         FROM sys_privilege
-        WHERE id IN (SELECT privilege_id FROM role_privilege_r WHERE role_id IN (SELECT role_id FORM user_role_r WHERE user_id = #{userId}))
-        AND deleted = 0
+        INNER JOIN role_privilege_r ON role_privilege_r.privilege_id = sys_privilege.id
+        INNER JOIN user_role_r ON user_role_r.role_id = role_privilege_r.role_id AND user_role_r.user_id = #{userId}
+        WHERE sys_privilege.deleted = 0
     </select>
 
     <delete id="deleteAllRoles">

@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS sys_role;
 CREATE TABLE sys_role
 (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
-    tenant_id BIGINT NOT NULL COMMENT '商户ID',
+    water_works_id BIGINT NOT NULL COMMENT '水厂ID',
     role_code VARCHAR(20) NOT NULL COMMENT '权限编码',
     role_name VARCHAR(20) NOT NULL COMMENT '角色名称',
     created_time DATETIME NOT NULL DEFAULT NOW() COMMENT '创建时间',
