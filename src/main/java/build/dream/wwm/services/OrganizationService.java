@@ -41,6 +41,7 @@ public class OrganizationService {
             zTreeNode.setId(organization.getId().toString());
             zTreeNode.setName(organization.getName());
             zTreeNode.setPId(organization.getParentId().toString());
+            zTreeNode.setOpen(true);
             return zTreeNode;
         }).collect(Collectors.toList());
 
