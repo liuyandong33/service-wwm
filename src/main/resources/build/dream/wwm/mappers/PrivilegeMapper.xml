@@ -5,10 +5,10 @@
         DELETE FROM role_privilege_r WHERE role_id = #{roleId}
     </delete>
 
-    <delete id="insertPrivileges">
+    <insert id="insertPrivileges">
         INSERT INTO role_privilege_r(role_id, privilege_id) VALUES
         <foreach collection="privilegeIds" index="index" item="privilegeId" separator=", ">
             (#{roleId}, #{privilegeId})
         </foreach>
-    </delete>
+    </insert>
 </mapper>

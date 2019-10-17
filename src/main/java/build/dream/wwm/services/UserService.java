@@ -2,22 +2,34 @@ package build.dream.wwm.services;
 
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.Constants;
+import build.dream.wwm.domains.SysPrivilege;
 import build.dream.wwm.domains.SysRole;
 import build.dream.wwm.domains.SysUser;
+import build.dream.wwm.mappers.UserMapper;
 import build.dream.wwm.models.user.SaveUserModel;
 import build.dream.wwm.orm.SearchModel;
 import build.dream.wwm.utils.DatabaseHelper;
 import build.dream.wwm.utils.ValidateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class UserService {
+    @Autowired
+    private UserMapper userMapper;
+
     @Transactional(readOnly = true)
     public SysUser findByLoginNameOrEmailOrMobile(String loginName) {
-        return DatabaseHelper.find(SysUser.class, 1);
+        return userMapper.findByLoginNameOrEmailOrMobile(loginName);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SysPrivilege> obtainAllPrivileges(long userId) {
+        return userMapper.obtainAllPrivileges(userId);
     }
 
     /**

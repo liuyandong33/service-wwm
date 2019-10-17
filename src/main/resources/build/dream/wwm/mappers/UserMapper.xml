@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="build.dream.wwm.mappers.UserMapper">
+    <select id="findByLoginNameOrEmailOrMobile" resultType="build.dream.wwm.domains.SysUser">
+        SELECT
+        *
+        FROM sys_user
+        WHERE (login_name = #{loginName} OR email = #{loginName} OR mobile = #{loginName})
+        AND deleted = 0
+    </select>
+
+    <select id="obtainAllPrivileges" resultType="build.dream.wwm.domains.SysPrivilege">
+        SELECT
+        *
+        FROM sys_privilege
+        WHERE id IN (SELECT privilege_id FROM role_privilege_r WHERE role_id IN (SELECT role_id FORM user_role_r WHERE user_id = #{userId}))
+        AND deleted = 0
+    </select>
+</mapper>
