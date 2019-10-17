@@ -3,6 +3,7 @@ package build.dream.wwm.services;
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.SysRole;
+import build.dream.wwm.mappers.PrivilegeMapper;
 import build.dream.wwm.models.role.DeleteRoleModel;
 import build.dream.wwm.models.role.ListRolesModel;
 import build.dream.wwm.models.role.SaveRoleModel;
@@ -11,6 +12,7 @@ import build.dream.wwm.orm.SearchCondition;
 import build.dream.wwm.orm.SearchModel;
 import build.dream.wwm.utils.DatabaseHelper;
 import build.dream.wwm.utils.ValidateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,9 @@ import java.util.*;
 
 @Service
 public class RoleService {
+    @Autowired
+    private PrivilegeMapper privilegeMapper;
+
     /**
      * 分页查询角色信息
      *
@@ -82,6 +87,7 @@ public class RoleService {
                     .updatedRemark("新增角色！")
                     .build();
             DatabaseHelper.insert(sysRole);
+            privilegeMapper.insertPrivileges(sysRole.getId(), privilegeIds);
         } else {
             SearchModel searchModel = SearchModel.builder()
                     .autoSetDeletedFalse()
@@ -95,6 +101,9 @@ public class RoleService {
             sysRole.setUpdatedUserId(userId);
             sysRole.setUpdatedRemark("修改角色信息！");
             DatabaseHelper.update(sysRole);
+
+            privilegeMapper.deleteRolePrivileges(id);
+            privilegeMapper.insertPrivileges(id, privilegeIds);
         }
         return ApiRest.builder().data(sysRole).message("保存角色信息成功！").successful(true).build();
     }
@@ -111,6 +120,20 @@ public class RoleService {
         Long userId = deleteRoleModel.obtainUserId();
         Long id = deleteRoleModel.getId();
 
-        return null;
+        SearchModel searchModel = SearchModel.builder()
+                .autoSetDeletedFalse()
+                .addSearchCondition(SysRole.ColumnName.WATER_WORKS_ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, waterWorksId)
+                .addSearchCondition(SysRole.ColumnName.ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, id)
+                .build();
+        SysRole sysRole = DatabaseHelper.find(SysRole.class, searchModel);
+        ValidateUtils.notNull(sysRole, "角色不存在！");
+
+        sysRole.setUpdatedUserId(userId);
+        sysRole.setUpdatedRemark("删除角色！");
+        sysRole.setDeleted(true);
+        sysRole.setDeletedTime(new Date());
+        DatabaseHelper.update(sysRole);
+        privilegeMapper.deleteRolePrivileges(id);
+        return ApiRest.builder().data(sysRole).message("删除角色信息成功！").successful(true).build();
     }
 }

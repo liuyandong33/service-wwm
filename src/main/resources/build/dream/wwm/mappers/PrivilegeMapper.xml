@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="build.dream.wwm.mappers.PrivilegeMapper">
+    <delete id="deleteRolePrivileges">
+        DELETE FROM role_privilege_r WHERE role_id = #{roleId}
+    </delete>
+
+    <delete id="insertPrivileges">
+        INSERT INTO role_privilege_r(role_id, privilege_id) VALUES
+        <foreach collection="privilegeIds" index="index" item="privilegeId" separator=", ">
+            (#{roleId}, #{privilegeId})
+        </foreach>
+    </delete>
+</mapper>

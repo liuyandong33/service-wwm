@@ -86,11 +86,11 @@ DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`
 (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
-    `name` VARCHAR(20) NOT NULL COMMENT '员工姓名',
+    `name` VARCHAR(20) NOT NULL COMMENT '姓名',
     mobile VARCHAR(20) NOT NULL COMMENT '手机号码',
     email VARCHAR(20) NOT NULL COMMENT '邮箱',
     `login_name` VARCHAR(20) NOT NULL COMMENT '登录名',
-    user_type TINYINT NOT NULL COMMENT '员工类型，1-商户主账号，2-商户员工，3-代理商',
+    user_type TINYINT NOT NULL COMMENT '用户类型，1-超级管理员，2-普通用户',
     `password` VARCHAR(50) NOT NULL COMMENT '登录密码',
     water_works_id BIGINT NOT NULL COMMENT '水厂ID',
     account_non_expired TINYINT NOT NULL DEFAULT 1 COMMENT '账户是否没有过期，1-没有过期，0-已经过期',

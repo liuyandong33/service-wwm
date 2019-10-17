@@ -1,27 +1,25 @@
 package build.dream.wwm.domains;
 
-import build.dream.wwm.constants.Constants;
-
 public class SysUser extends BasicDomain {
     public static final String TABLE_NAME = "sys_user";
     /**
-     * 员工姓名
+     * 姓名
      */
     private String name;
     /**
      * 手机号码
      */
-    private String mobile = Constants.VARCHAR_DEFAULT_VALUE;
+    private String mobile;
     /**
      * 邮箱
      */
-    private String email = Constants.VARCHAR_DEFAULT_VALUE;
+    private String email;
     /**
      * 登录名
      */
-    private String loginName = Constants.VARCHAR_DEFAULT_VALUE;
+    private String loginName;
     /**
-     * 员工类型，1-商户主账号，2-商户员工，3-代理商
+     * 用户类型，1-超级管理员，2-普通用户
      */
     private Integer userType;
     /**
@@ -35,19 +33,22 @@ public class SysUser extends BasicDomain {
     /**
      * 账户是否没有过期，1-没有过期，0-已经过期
      */
-    private boolean accountNonExpired;
+    private boolean accountNonExpired = true;
     /**
      * 账户是否没有锁定，1-没有锁定，0-已经锁定
      */
-    private boolean accountNonLocked;
+    private boolean accountNonLocked = true;
+    ;
     /**
      * 账户凭证是否没有过期，1-没有过期，0-已经过期
      */
-    private boolean credentialsNonExpired;
+    private boolean credentialsNonExpired = true;
+    ;
     /**
      * 账户是否启用，1-启用，0-禁用
      */
-    private boolean enabled;
+    private boolean enabled = true;
+    ;
 
     public String getName() {
         return name;
