@@ -7,7 +7,6 @@ import build.dream.wwm.domains.SysRole;
 import build.dream.wwm.domains.SysUser;
 import build.dream.wwm.mappers.UserMapper;
 import build.dream.wwm.models.role.DeleteUserModel;
-import build.dream.wwm.models.role.SetRolesModel;
 import build.dream.wwm.models.role.UpdateUserModel;
 import build.dream.wwm.models.user.AddUserModel;
 import build.dream.wwm.orm.SearchModel;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -138,20 +136,5 @@ public class UserService {
         userMapper.deleteAllRoles(id);
 
         return ApiRest.builder().data(sysUser).message("删除用户信息成功！").successful(true).build();
-    }
-
-    /**
-     * 设置角色
-     *
-     * @param setRolesModel
-     * @return
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public ApiRest setRoles(SetRolesModel setRolesModel) {
-        Long id = setRolesModel.getId();
-        List<Long> roleIds = setRolesModel.getRoleIds();
-        userMapper.deleteAllRoles(id);
-        userMapper.insetRoles(id, roleIds);
-        return ApiRest.builder().message("设置角色成功！").successful(true).build();
     }
 }

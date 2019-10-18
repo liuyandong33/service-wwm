@@ -2,7 +2,6 @@ package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
 import build.dream.wwm.models.role.DeleteUserModel;
-import build.dream.wwm.models.role.SetRolesModel;
 import build.dream.wwm.models.role.UpdateUserModel;
 import build.dream.wwm.models.user.AddUserModel;
 import build.dream.wwm.services.UserService;
@@ -47,18 +46,6 @@ public class UserController {
     @ResponseBody
     @ApiRestAction(modelClass = DeleteUserModel.class, serviceClass = UserService.class, serviceMethodName = "deleteUser", error = "删除用户信息失败")
     public String deleteUser() {
-        return null;
-    }
-
-    /**
-     * 设置角色
-     *
-     * @return
-     */
-    @RequestMapping(value = "/setRoles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
-    @ApiRestAction(modelClass = SetRolesModel.class, serviceClass = UserService.class, serviceMethodName = "setRoles", error = "设置角色失败")
-    public String setRoles() {
         return null;
     }
 }
