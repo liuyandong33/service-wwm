@@ -6,18 +6,8 @@ public class ZTreeNode {
     private String id;
     private String name;
     @JsonProperty(value = "pId")
-    private String pId;
+    private String pid;
     private boolean open;
-
-    public ZTreeNode() {
-
-    }
-
-    public ZTreeNode(String id, String name, String pId) {
-        this.id = id;
-        this.name = name;
-        this.pId = pId;
-    }
 
     public String getId() {
         return id;
@@ -35,12 +25,12 @@ public class ZTreeNode {
         this.name = name;
     }
 
-    public String getPId() {
-        return pId;
+    public String getPid() {
+        return pid;
     }
 
-    public void setPId(String pId) {
-        this.pId = pId;
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
     public boolean isOpen() {

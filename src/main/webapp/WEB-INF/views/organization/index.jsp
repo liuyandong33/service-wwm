@@ -13,12 +13,14 @@
     <script type="text/javascript" src="../libraries/jquery/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../libraries/zTree_v3-v3.5.16/js/jquery.ztree.all-3.5.js"></script>
     <script type="text/javascript">
-        function beforeDrag() {
+        function beforeDrag(treeId, treeNodes, targetNode, moveType) {
             console.log("beforeDrag");
+            return true;
         }
 
-        function beforeDrop() {
+        function beforeDrop(treeId, treeNodes, targetNode, moveType) {
             console.log("beforeDrop");
+            return true;
         }
 
         function onDrop(event, treeId, treeNodes, targetNode, moveType) {
@@ -29,7 +31,7 @@
                 simpleData: {
                     enable: true,
                     idKey: "id",
-                    pidKey: "pId",
+                    pIdKey: "pId",
                     rootId: "0"
                 }
             },
@@ -37,8 +39,7 @@
                 selectedMulti: false
             },
             check: {
-                enable: true,
-                chkStyle: "checkbox"
+                enable: false
             },
             edit: {
                 enable: true,
@@ -61,38 +62,18 @@
 
         var zTreeObj = null;
         $(function () {
-            $.get("../role/obtainRoleInfo?access_token=4e28ec2c-a3ba-4b59-bc94-fbe7cad49b23", {roleId: 1}, function (result) {
+            $.get("../organization/obtainAllOrganizations?access_token=485c83df-c279-4760-a432-37d95a01fd50", {}, function (result) {
                 if (result["successful"]) {
-                    var data = result["data"];
-                    var privileges = data["privileges"];
-                    var rolePrivileges = data["rolePrivileges"];
-                    zTreeObj = $.fn.zTree.init($("#zTree"), setting, privileges);
-
-                    for (var index = 0; index < rolePrivileges.length; index++) {
-                        var rolePrivilege = rolePrivileges[index];
-                        var node = zTreeObj.getNodeByParam("id", rolePrivilege["id"]);
-                        if(node != null) {
-                            zTreeObj.checkNode(node, true);
-                        }
-                    }
+                    var organizations = result["data"];
+                    zTreeObj = $.fn.zTree.init($("#zTree"), setting, organizations);
                 } else {
                     alert(result["error"]);
                 }
             }, "json");
         });
-
-        function save() {
-            var checkedNodes = zTreeObj.getCheckedNodes(true);
-            var privilegeIds = [];
-            for (var index in checkedNodes) {
-                privilegeIds.push(checkedNodes[index]["id"]);
-            }
-        }
     </script>
 </head>
 <body>
 <div id="zTree" class="ztree"></div>
-
-<button onclick="save();">保存</button>
 </body>
 </html>

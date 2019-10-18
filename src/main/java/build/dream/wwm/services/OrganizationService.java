@@ -4,10 +4,7 @@ import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.beans.ZTreeNode;
 import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.Organization;
-import build.dream.wwm.models.organization.AddOrganizationModel;
-import build.dream.wwm.models.organization.DeleteOrganizationModel;
-import build.dream.wwm.models.organization.ObtainAllOrganizationsModel;
-import build.dream.wwm.models.organization.UpdateOrganizationModel;
+import build.dream.wwm.models.organization.*;
 import build.dream.wwm.orm.SearchModel;
 import build.dream.wwm.utils.DatabaseHelper;
 import build.dream.wwm.utils.ValidateUtils;
@@ -40,7 +37,7 @@ public class OrganizationService {
             ZTreeNode zTreeNode = new ZTreeNode();
             zTreeNode.setId(organization.getId().toString());
             zTreeNode.setName(organization.getName());
-            zTreeNode.setPId(organization.getParentId().toString());
+            zTreeNode.setPid(organization.getParentId().toString());
             zTreeNode.setOpen(true);
             return zTreeNode;
         }).collect(Collectors.toList());
@@ -130,5 +127,19 @@ public class OrganizationService {
         organization.setDeletedTime(new Date());
         DatabaseHelper.update(organization);
         return ApiRest.builder().data(organization).message("删除机构信息成功！").successful(true).build();
+    }
+
+    /**
+     * 设置机构上下级关系
+     * @param setRelationshipModel
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ApiRest setRelationship(SetRelationshipModel setRelationshipModel) {
+        Long userId = setRelationshipModel.obtainUserId();
+        Long waterWorksId = setRelationshipModel.obtainWaterWorksId();
+        Long id = setRelationshipModel.getId();
+        Long parentId = setRelationshipModel.getParentId();
+        return ApiRest.builder().message("设置机构上下级关系成功！").build();
     }
 }

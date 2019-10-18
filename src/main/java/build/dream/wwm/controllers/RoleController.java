@@ -64,6 +64,6 @@ public class RoleController {
 
     @RequestMapping(value = "/index")
     public String index() {
-        return "privilege/index";
+        return "role/index";
     }
 }

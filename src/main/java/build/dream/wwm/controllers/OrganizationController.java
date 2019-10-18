@@ -1,10 +1,7 @@
 package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
-import build.dream.wwm.models.organization.AddOrganizationModel;
-import build.dream.wwm.models.organization.DeleteOrganizationModel;
-import build.dream.wwm.models.organization.ObtainAllOrganizationsModel;
-import build.dream.wwm.models.organization.UpdateOrganizationModel;
+import build.dream.wwm.models.organization.*;
 import build.dream.wwm.services.OrganizationService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -59,6 +56,23 @@ public class OrganizationController {
     @ResponseBody
     @ApiRestAction(modelClass = DeleteOrganizationModel.class, serviceClass = OrganizationService.class, serviceMethodName = "deleteOrganization", error = "删除机构信息失败")
     public String deleteOrganization() {
+        return null;
+    }
+
+    @RequestMapping(value = "/index")
+    public String index() {
+        return "organization/index";
+    }
+
+    /**
+     * 设置机构下级关系
+     *
+     * @return
+     */
+    @RequestMapping(value = "/setRelationship", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = SetRelationshipModel.class, serviceClass = OrganizationService.class, serviceMethodName = "setRelationship", error = "设置机构上下级关系失败")
+    public String setRelationship() {
         return null;
     }
 }
