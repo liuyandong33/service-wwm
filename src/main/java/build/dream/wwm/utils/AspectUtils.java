@@ -49,12 +49,12 @@ public class AspectUtils {
             Method targetMethod = obtainTargetMethod(proceedingJoinPoint);
             OnlyAllowedApplicationJsonUtf8 onlyAllowedApplicationJsonUtf8 = AnnotationUtils.findAnnotation(targetMethod, OnlyAllowedApplicationJsonUtf8.class);
             if (Objects.nonNull(onlyAllowedApplicationJsonUtf8)) {
-                ValidateUtils.isTrue(Constants.CONTENT_TYPE_APPLICATION_JSON_UTF8.equals(contentType), ErrorConstants.INVALID_CONTENT_TYPE_ERROR);
+                ValidateUtils.isTrue(isApplicationJsonUtf8(contentType), ErrorConstants.INVALID_CONTENT_TYPE_ERROR);
             }
 
             OnlyAllowedApplicationFormUrlencodedUtf8 onlyAllowedApplicationFormUrlencodedUtf8 = AnnotationUtils.findAnnotation(targetMethod, OnlyAllowedApplicationFormUrlencodedUtf8.class);
             if (Objects.nonNull(onlyAllowedApplicationFormUrlencodedUtf8)) {
-                ValidateUtils.isTrue(Constants.CONTENT_TYPE_APPLICATION_FORM_URLENCODED_UTF8.equals(contentType), ErrorConstants.INVALID_CONTENT_TYPE_ERROR);
+                ValidateUtils.isTrue(isApplicationFormUrlEncodedUtf8(contentType), ErrorConstants.INVALID_CONTENT_TYPE_ERROR);
             }
 
             String method = httpServletRequest.getMethod();
@@ -213,13 +213,23 @@ public class AspectUtils {
     }
 
     private static ApiRest callApiRestAction(HttpServletRequest httpServletRequest, ProceedingJoinPoint proceedingJoinPoint, ApiRestAction apiRestAction, Method targetMethod, String contentType) throws Throwable {
-        if (Constants.CONTENT_TYPE_APPLICATION_JSON_UTF8.equals(contentType)) {
+        if (isApplicationJsonUtf8(contentType)) {
             return callApiRestAction(httpServletRequest, proceedingJoinPoint, apiRestAction, targetMethod);
-        } else if (Constants.CONTENT_TYPE_APPLICATION_FORM_URLENCODED_UTF8.equals(contentType)) {
-            return callApiRestAction(httpServletRequest, proceedingJoinPoint, apiRestAction);
-        } else {
-            throw new CustomException(ErrorConstants.INVALID_CONTENT_TYPE_ERROR);
         }
+
+        if (isApplicationFormUrlEncodedUtf8(contentType)) {
+            return callApiRestAction(httpServletRequest, proceedingJoinPoint, apiRestAction);
+        }
+
+        throw new CustomException(ErrorConstants.INVALID_CONTENT_TYPE_ERROR);
+    }
+
+    private static boolean isApplicationJsonUtf8(String contentType) {
+        return "application/json;charset=UTF-8".equals(contentType) || "application/json; charset=UTF-8".equals(contentType);
+    }
+
+    private static boolean isApplicationFormUrlEncodedUtf8(String contentType) {
+        return "application/x-www-form-urlencoded;charset=UTF-8".equals(contentType) || "application/x-www-form-urlencoded; charset=UTF-8".equals(contentType);
     }
 
     private static ApiRest callApiRestAction(HttpServletRequest httpServletRequest, ProceedingJoinPoint proceedingJoinPoint, ApiRestAction apiRestAction) throws Throwable {

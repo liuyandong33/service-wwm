@@ -6,6 +6,7 @@ import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.Organization;
 import build.dream.wwm.models.organization.*;
 import build.dream.wwm.orm.SearchModel;
+import build.dream.wwm.orm.UpdateModel;
 import build.dream.wwm.utils.DatabaseHelper;
 import build.dream.wwm.utils.ValidateUtils;
 import org.springframework.stereotype.Service;
@@ -131,6 +132,7 @@ public class OrganizationService {
 
     /**
      * 设置机构上下级关系
+     *
      * @param setRelationshipModel
      * @return
      */
@@ -140,6 +142,16 @@ public class OrganizationService {
         Long waterWorksId = setRelationshipModel.obtainWaterWorksId();
         Long id = setRelationshipModel.getId();
         Long parentId = setRelationshipModel.getParentId();
-        return ApiRest.builder().message("设置机构上下级关系成功！").build();
+
+        UpdateModel updateModel = UpdateModel.builder()
+                .addContentValue(Organization.ColumnName.PARENT_ID, parentId, 1)
+                .addContentValue(Organization.ColumnName.UPDATED_USER_ID, userId, 1)
+                .addContentValue(Organization.ColumnName.UPDATED_REMARK, "设置机构上下级关系！", 1)
+                .autoSetDeletedFalse()
+                .addSearchCondition(Organization.ColumnName.WATER_WORKS_ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, waterWorksId)
+                .addSearchCondition(Organization.ColumnName.ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, id)
+                .build();
+        DatabaseHelper.universalUpdate(updateModel, Organization.TABLE_NAME);
+        return ApiRest.builder().message("设置机构上下级关系成功！").successful(true).build();
     }
 }

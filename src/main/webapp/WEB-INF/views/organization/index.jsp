@@ -24,7 +24,19 @@
         }
 
         function onDrop(event, treeId, treeNodes, targetNode, moveType) {
-            console.log("onDrop");
+            var treeNode = treeNodes[0];
+            var id = treeNode["id"];
+            var parentId = treeNode["pId"];
+            if (!parentId) {
+                parentId = 0;
+            }
+            $.post("../organization/setRelationship?access_token=485c83df-c279-4760-a432-37d95a01fd50", {id: id, parentId: parentId}, function (result) {
+                if (result["successful"]) {
+                    alert(result["message"]);
+                } else {
+                    alert(result["error"]["message"]);
+                }
+            }, "json");
         }
         var setting = {
             data: {
