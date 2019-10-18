@@ -1,10 +1,7 @@
 package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
-import build.dream.wwm.models.role.AddRoleModel;
-import build.dream.wwm.models.role.DeleteRoleModel;
-import build.dream.wwm.models.role.ListRolesModel;
-import build.dream.wwm.models.role.ObtainRoleInfoModel;
+import build.dream.wwm.models.role.*;
 import build.dream.wwm.services.RoleService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -35,6 +32,18 @@ public class RoleController {
     @ResponseBody
     @ApiRestAction(modelClass = AddRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "addRole", error = "新增角色失败")
     public String addRole() {
+        return null;
+    }
+
+    /**
+     * 修改角色信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/updateRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = UpdateRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "updateRole", error = "修改角色失败")
+    public String updateRole() {
         return null;
     }
 

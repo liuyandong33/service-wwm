@@ -95,6 +95,7 @@ public class RoleService {
      * @param updateRoleModel
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public ApiRest updateRole(UpdateRoleModel updateRoleModel) {
         Long waterWorksId = updateRoleModel.obtainWaterWorksId();
         Long userId = updateRoleModel.obtainUserId();
