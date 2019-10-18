@@ -13,10 +13,12 @@ import build.dream.wwm.models.user.AddUserModel;
 import build.dream.wwm.orm.SearchModel;
 import build.dream.wwm.utils.DatabaseHelper;
 import build.dream.wwm.utils.ValidateUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +51,7 @@ public class UserService {
         String mobile = addUserModel.getMobile();
         String email = addUserModel.getEmail();
         String loginName = addUserModel.getLoginName();
+        List<Long> roleIds = addUserModel.getRoleIds();
 
         SysUser sysUser = SysUser.builder()
                 .name(name)
@@ -63,6 +66,9 @@ public class UserService {
                 .updatedRemark("新增用户信息！")
                 .build();
         DatabaseHelper.insert(sysUser);
+        if (CollectionUtils.isNotEmpty(roleIds)) {
+            userMapper.insetRoles(sysUser.getId(), roleIds);
+        }
         return ApiRest.builder().data(sysUser).message("新增用户信息成功！").successful(true).build();
     }
 
@@ -81,6 +87,7 @@ public class UserService {
         String mobile = updateUserModel.getMobile();
         String email = updateUserModel.getEmail();
         String loginName = updateUserModel.getLoginName();
+        List<Long> roleIds = updateUserModel.getRoleIds();
 
         SearchModel searchModel = SearchModel.builder()
                 .autoSetDeletedFalse()
@@ -97,6 +104,10 @@ public class UserService {
         sysUser.setUpdatedUserId(userId);
         sysUser.setUpdatedRemark("修改用户信息！");
         DatabaseHelper.update(sysUser);
+        userMapper.deleteAllRoles(id);
+        if (CollectionUtils.isNotEmpty(roleIds)) {
+            userMapper.insetRoles(id, roleIds);
+        }
         return ApiRest.builder().data(sysUser).message("修改用户信息成功！").successful(true).build();
     }
 

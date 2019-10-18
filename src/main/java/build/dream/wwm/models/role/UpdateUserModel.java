@@ -4,6 +4,7 @@ import build.dream.wwm.models.UserBasicModel;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class UpdateUserModel extends UserBasicModel {
     @NotNull
@@ -24,6 +25,8 @@ public class UpdateUserModel extends UserBasicModel {
     @NotNull
     @Length(max = 20)
     private String loginName;
+
+    private List<Long> roleIds;
 
     public Long getId() {
         return id;
@@ -63,5 +66,13 @@ public class UpdateUserModel extends UserBasicModel {
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
+    }
+
+    public List<Long> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<Long> roleIds) {
+        this.roleIds = roleIds;
     }
 }

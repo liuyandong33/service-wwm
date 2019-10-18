@@ -69,7 +69,7 @@ public class RoleService {
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public ApiRest saveRole(AddRoleModel addRoleModel) {
+    public ApiRest addRole(AddRoleModel addRoleModel) {
         Long waterWorksId = addRoleModel.obtainWaterWorksId();
         Long userId = addRoleModel.obtainUserId();
         String roleCode = addRoleModel.getRoleCode();
