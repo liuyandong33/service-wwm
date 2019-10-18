@@ -1,7 +1,7 @@
 package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
-import build.dream.wwm.models.purchaseplan.SavePurchasePlanModel;
+import build.dream.wwm.models.purchase.SavePurchasePlanModel;
 import build.dream.wwm.services.PurchasePlanService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/purchasePlan")
-public class PurchasePlanController {
+@RequestMapping(value = "/purchase")
+public class PurchaseController {
     /**
      * 保存采购计划
      *

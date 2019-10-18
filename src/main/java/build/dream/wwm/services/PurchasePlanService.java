@@ -1,7 +1,7 @@
 package build.dream.wwm.services;
 
 import build.dream.wwm.api.ApiRest;
-import build.dream.wwm.models.purchaseplan.SavePurchasePlanModel;
+import build.dream.wwm.models.purchase.SavePurchasePlanModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
