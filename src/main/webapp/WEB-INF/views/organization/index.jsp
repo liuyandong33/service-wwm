@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../libraries/jquery/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../libraries/zTree_v3-v3.5.16/js/jquery.ztree.all-3.5.js"></script>
     <script type="text/javascript">
+        var accessToken = "${accessToken}";
         function beforeDrag(treeId, treeNodes, targetNode, moveType) {
             console.log("beforeDrag");
             return true;
@@ -30,7 +31,7 @@
             if (!parentId) {
                 parentId = 0;
             }
-            $.post("../organization/setRelationship?access_token=485c83df-c279-4760-a432-37d95a01fd50", {id: id, parentId: parentId}, function (result) {
+            $.post("../organization/setRelationship?access_token=" + accessToken, {id: id, parentId: parentId}, function (result) {
                 if (result["successful"]) {
                     alert(result["message"]);
                 } else {
@@ -74,7 +75,7 @@
 
         var zTreeObj = null;
         $(function () {
-            $.get("../organization/obtainAllOrganizations?access_token=485c83df-c279-4760-a432-37d95a01fd50", {}, function (result) {
+            $.get("../organization/obtainAllOrganizations?access_token=" + accessToken, {}, function (result) {
                 if (result["successful"]) {
                     var organizations = result["data"];
                     zTreeObj = $.fn.zTree.init($("#zTree"), setting, organizations);
