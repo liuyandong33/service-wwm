@@ -3,10 +3,14 @@ package build.dream.wwm.controllers;
 import build.dream.wwm.annotations.ApiRestAction;
 import build.dream.wwm.models.role.*;
 import build.dream.wwm.services.RoleService;
+import build.dream.wwm.utils.ApplicationHandler;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/role")
@@ -72,7 +76,10 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/index")
-    public String index() {
-        return "role/index";
+    public ModelAndView index() {
+        Map<String, String> requestParameters = ApplicationHandler.getRequestParameters();
+        ModelAndView modelAndView = new ModelAndView("role/index");
+        modelAndView.addObject("accessToken", requestParameters.get("access_token"));
+        return modelAndView;
     }
 }

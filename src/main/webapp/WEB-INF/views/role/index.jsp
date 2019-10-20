@@ -32,8 +32,9 @@
         };
 
         var zTreeObj = null;
+        var accessToken = "${accessToken}";
         $(function () {
-            $.get("../role/obtainRoleInfo?access_token=786d3bb9-a042-4aa3-9896-3d9287c11a04", {roleId: 1}, function (result) {
+            $.get("../role/obtainRoleInfo?access_token=" + accessToken, {roleId: 1}, function (result) {
                 if (result["successful"]) {
                     var data = result["data"];
                     var privileges = data["privileges"];
@@ -59,6 +60,7 @@
             for (var index in checkedNodes) {
                 privilegeIds.push(checkedNodes[index]["id"]);
             }
+            alert(privilegeIds.join(","));
         }
     </script>
 </head>

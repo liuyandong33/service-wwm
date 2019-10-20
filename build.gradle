@@ -46,4 +46,5 @@ dependencies {
     compile("commons-beanutils:commons-beanutils:1.9.4")
     compile("org.apache.commons:commons-pool2:2.7.0")
     compile("org.aspectj:aspectjweaver:1.9.2")
+    compile("com.google.zxing:javase:3.3.3")
 }
