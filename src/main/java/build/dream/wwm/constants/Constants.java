@@ -134,4 +134,12 @@ public class Constants {
     public static final String AUTHENTICATED = "authenticated";
     public static final String PERMIT_ALL = "permitAll";
     public static final String HAS_AUTHORITY_FORMAT = "hasAuthority('%s')";
+
+    public static final String TLS = "TLS";
+    public static final String PKCS12 = "PKCS12";
+
+    // 代理服务器主机名
+    public static final String PROXY_SERVER_HOST_NAME = "proxy.server.host.name";
+    // 代理服务器端口号
+    public static final String PROXY_SERVER_PORT = "proxy.server.port";
 }

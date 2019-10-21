@@ -47,4 +47,7 @@ dependencies {
     compile("org.apache.commons:commons-pool2:2.7.0")
     compile("org.aspectj:aspectjweaver:1.9.2")
     compile("com.google.zxing:javase:3.3.3")
+    compile("org.apache.axis:axis:1.4")
+    compile("axis:axis-jaxrpc:1.4")
+    compile("commons-discovery:commons-discovery:0.5")
 }

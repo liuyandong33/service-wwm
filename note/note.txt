@@ -1,0 +1,16 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body xmlns:ns1="http://xmlns.oracle.com/Interface/MDMTableConditionDataNew/MDMTableConditionDataNew">
+        <ns1:process>
+            <ns1:IN_SYS_NAME>S01658</ns1:IN_SYS_NAME>
+            <ns1:IN_MASTER_TYPE>HAIERMDM</ns1:IN_MASTER_TYPE>
+            <ns1:IN_TABLE_NAME>hrsom_hm_customer_info</ns1:IN_TABLE_NAME>
+            <ns1:IN_FIELDS_VALUE_TABLE>
+                <ns1:IN_FIELDS_VALUE_TABLE_ITEM>
+                    <ns1:FIELD_NAME>MATERIAL_CODE</ns1:FIELD_NAME>
+                    <ns1:FIELD_VALUE>0000180354,0000180364</ns1:FIELD_VALUE>
+                    <ns1:FIELD_QUERY_TYPE>in</ns1:FIELD_QUERY_TYPE>
+                </ns1:IN_FIELDS_VALUE_TABLE_ITEM>
+            </ns1:IN_FIELDS_VALUE_TABLE>
+        </ns1:process>
+    </soap:Body>
+</soap:Envelope>
