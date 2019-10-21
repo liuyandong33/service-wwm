@@ -152,7 +152,7 @@ public class OutUtils {
 
     public static ResponseEntity<byte[]> doGetOrdinaryWithRequestParameters(String url, Map<String, String> headers, Map<String, String> requestParameters) throws IOException {
         return ApplicationHandler.callMethodSuppressThrow(() -> {
-//            ValidateUtils.notNull(proxy, "未配置代理服务器！");
+            ValidateUtils.notNull(proxy, "未配置代理服务器！");
             DoGetOrdinaryWithRequestParametersModel doGetOrdinaryWithRequestParametersModel = DoGetOrdinaryWithRequestParametersModel.builder()
                     .requestUrl(url)
                     .headers(headers)
