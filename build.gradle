@@ -50,4 +50,7 @@ dependencies {
     compile("org.apache.axis:axis:1.4")
     compile("axis:axis-jaxrpc:1.4")
     compile("commons-discovery:commons-discovery:0.5")
+
+    compile("io.springfox:springfox-swagger2:2.9.2")
+    compile("io.springfox:springfox-swagger-ui:2.9.2")
 }

@@ -1,12 +1,15 @@
 package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
+import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.models.role.*;
 import build.dream.wwm.services.RoleService;
 import build.dream.wwm.utils.ApplicationHandler;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,7 +23,8 @@ public class RoleController {
      *
      * @return
      */
-    @RequestMapping(value = "/listRoles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "listRoles", notes = "分页查询角色", response = ApiRest.class)
+    @RequestMapping(value = "/listRoles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @ApiRestAction(modelClass = ListRolesModel.class, serviceClass = RoleService.class, serviceMethodName = "listRoles", error = "查询角色失败")
     public String listRoles() {
@@ -32,7 +36,7 @@ public class RoleController {
      *
      * @return
      */
-    @RequestMapping(value = "/addRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/addRole", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @ApiRestAction(modelClass = AddRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "addRole", error = "新增角色失败")
     public String addRole() {
@@ -44,7 +48,7 @@ public class RoleController {
      *
      * @return
      */
-    @RequestMapping(value = "/updateRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/updateRole", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @ApiRestAction(modelClass = UpdateRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "updateRole", error = "修改角色失败")
     public String updateRole() {
@@ -56,7 +60,7 @@ public class RoleController {
      *
      * @return
      */
-    @RequestMapping(value = "/deleteRole", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/deleteRole", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @ApiRestAction(modelClass = DeleteRoleModel.class, serviceClass = RoleService.class, serviceMethodName = "deleteRole", error = "删除角色失败")
     public String deleteRole() {
@@ -68,14 +72,14 @@ public class RoleController {
      *
      * @return
      */
-    @RequestMapping(value = "/obtainRoleInfo", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/obtainRoleInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @ApiRestAction(modelClass = ObtainRoleInfoModel.class, serviceClass = RoleService.class, serviceMethodName = "obtainRoleInfo", error = "获取角色信息失败")
     public String obtainRoleInfo() {
         return null;
     }
 
-    @RequestMapping(value = "/index")
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index() {
         Map<String, String> requestParameters = ApplicationHandler.getRequestParameters();
         ModelAndView modelAndView = new ModelAndView("role/index");

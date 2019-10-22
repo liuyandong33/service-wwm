@@ -48,7 +48,12 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     private static final String[] PERMIT_ALL_ANT_PATTERNS = {
             "/favicon.ico",
-            "/actuator/**"
+            "/actuator/**",
+            "/swagger-ui.html",
+            "/swagger-resources/**",
+            "/v2/api-docs",
+            "/",
+            "/csrf"
     };
 
     @Override

@@ -142,4 +142,7 @@ public class Constants {
     public static final String PROXY_SERVER_HOST_NAME = "proxy.server.host.name";
     // 代理服务器端口号
     public static final String PROXY_SERVER_PORT = "proxy.server.port";
+
+    public static final String SUCCESS = "SUCCESS";
+    public static final String OK = "OK";
 }
