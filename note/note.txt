@@ -23,3 +23,14 @@ https://api.weixin.qq.com/sns/component/jscode2session?appid=APPIT&js_code=JSCOD
 https://api.weixin.qq.com/sns/jscode2session?appid=wxb8a295358be8d77a&secret=f31cb2cae70dfbd9fe5bb785eaf2a383&js_code=00157kV0106beX1AgoS01bzlV0157kV5&grant_type=authorization_code
 
 http://localhost:8989/oauth/token?grant_type=password&username=61011888&password=123456&client_id=61011888&client_secret=123456&scope=all
+
+1、每个节点必须是红色或者黑色
+2、根节点永远是黑色
+3、红色节点的两个子节点必须是黑色
+4、从任一节点到其子树中每个叶子节点的路径包含相同数量的黑色节点
+
+https://blog.csdn.net/Lyt15829797751/article/details/81054920
+https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
+插入节点
+1、插入节点的父亲节点，父亲节点为红色，叔叔节点（插入节点的父节点的兄弟节点）为红色，那么就把父亲节点和叔叔节点涂成黑色，祖父节点涂成红色（但是如果祖父节点是根节点涂成黑色）
+2、
