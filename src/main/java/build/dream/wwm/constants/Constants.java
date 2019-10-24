@@ -145,4 +145,6 @@ public class Constants {
 
     public static final String SUCCESS = "SUCCESS";
     public static final String OK = "OK";
+
+    public static final String CONTENT_TYPE = "Content-Type";
 }
