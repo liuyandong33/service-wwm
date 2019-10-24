@@ -7,16 +7,26 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.UUID;
+
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @ServletComponentScan
 @MapperScan(basePackages = {"build.dream.wwm.mappers"})
 @EnableSwagger2
 public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+//        SpringApplication.run(Application.class, args);
 //        int[] array = new int[]{-1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 //        System.out.println(first(array));
 //        System.out.println(second(array));
+
+        Map<Integer, String> map = new TreeMap<Integer, String>();
+        map.put(11, UUID.randomUUID().toString());
+        map.put(1, UUID.randomUUID().toString());
+        map.put(110, UUID.randomUUID().toString());
     }
 
     public static long first(int[] array) {

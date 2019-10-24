@@ -1,14 +1,32 @@
 package build.dream.wwm.utils;
 
 import build.dream.wwm.api.ApiRest;
+import build.dream.wwm.fallbacks.MicroServiceCallerFallback;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
-public abstract class MicroServiceCaller {
-    protected abstract RestTemplate obtainRestTemplate();
+public class MicroServiceCaller {
+    private static RestTemplate restTemplate;
+    private MicroServiceCallerFallback microServiceCallerFallback;
+
+    public MicroServiceCallerFallback getMicroServiceCallerFallback() {
+        return microServiceCallerFallback;
+    }
+
+    public void setMicroServiceCallerFallback(MicroServiceCallerFallback microServiceCallerFallback) {
+        this.microServiceCallerFallback = microServiceCallerFallback;
+    }
+
+    private RestTemplate obtainRestTemplate() {
+        if (Objects.isNull(restTemplate)) {
+            restTemplate = ApplicationHandler.getBean(RestTemplate.class);
+        }
+        return restTemplate;
+    }
 
     /**
      * GET 请求调用分区服务
@@ -24,6 +42,10 @@ public abstract class MicroServiceCaller {
         return obtainRestTemplate().getForObject(ProxyUtils.obtainUrl(partitionCode, serviceName, controllerName, actionName, requestParameters), String.class);
     }
 
+    public String doGetOriginalWithRequestParametersFallback(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
+        return microServiceCallerFallback.doGetOriginalWithRequestParametersFallback(partitionCode, serviceName, controllerName, actionName, requestParameters);
+    }
+
     /**
      * GET 请求调用公共服务
      *
@@ -35,6 +57,10 @@ public abstract class MicroServiceCaller {
      */
     public String doGetOriginalWithRequestParameters(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return obtainRestTemplate().getForObject(ProxyUtils.obtainUrl(null, serviceName, controllerName, actionName, requestParameters), String.class);
+    }
+
+    public String doGetOriginalWithRequestParametersFallback(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
+        return microServiceCallerFallback.doGetOriginalWithRequestParametersFallback(serviceName, controllerName, actionName, requestParameters);
     }
 
     /**
@@ -51,6 +77,10 @@ public abstract class MicroServiceCaller {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(partitionCode, serviceName, controllerName, actionName), ProxyUtils.buildApplicationFormUrlEncodedHttpEntity(requestParameters), String.class);
     }
 
+    public String doPostOriginalWithRequestParametersFallback(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
+        return microServiceCallerFallback.doPostOriginalWithRequestParametersFallback(partitionCode, serviceName, controllerName, actionName, requestParameters);
+    }
+
     /**
      * POST 请求调用公共服务
      *
@@ -62,6 +92,10 @@ public abstract class MicroServiceCaller {
      */
     public String doPostOriginalWithRequestParameters(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(null, serviceName, controllerName, actionName), ProxyUtils.buildApplicationFormUrlEncodedHttpEntity(requestParameters), String.class);
+    }
+
+    public String doPostOriginalWithRequestParametersFallback(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
+        return microServiceCallerFallback.doPostOriginalWithRequestParametersFallback(serviceName, controllerName, actionName, requestParameters);
     }
 
     /**

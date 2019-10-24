@@ -3,7 +3,7 @@ package build.dream.wwm.utils;
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.Constants;
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -68,6 +68,14 @@ public class ProxyUtils {
         return applicationJsonUtf8HttpHeaders;
     }
 
+    public static String obtainApplicationName(String partitionCode, String serviceName) {
+        String deploymentEnvironment = ConfigurationUtils.getConfiguration(Constants.DEPLOYMENT_ENVIRONMENT);
+        if (StringUtils.isBlank(partitionCode)) {
+            return deploymentEnvironment + "-" + serviceName;
+        }
+        return deploymentEnvironment + "-" + partitionCode + "-" + serviceName;
+    }
+
     /**
      * 拼接url
      *
@@ -78,14 +86,7 @@ public class ProxyUtils {
      * @return
      */
     public static String obtainUrl(String partitionCode, String serviceName, String controllerName, String actionName) {
-        String deploymentEnvironment = ConfigurationUtils.getConfiguration(Constants.DEPLOYMENT_ENVIRONMENT);
-        StringBuilder stringBuilder = new StringBuilder("http://");
-        stringBuilder.append(deploymentEnvironment).append("-");
-        if (StringUtils.isNotBlank(partitionCode)) {
-            stringBuilder.append(partitionCode).append("-");
-        }
-        stringBuilder.append(serviceName).append("/").append(controllerName).append("/").append(actionName);
-        return stringBuilder.toString();
+        return "http://" + obtainApplicationName(partitionCode, serviceName) + "/" + controllerName + "/" + actionName;
     }
 
     /**
@@ -539,15 +540,5 @@ public class ProxyUtils {
      */
     public static ResponseEntity<byte[]> doPostOrdinaryWithRequestParameters(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return obtainMicroServiceCaller().doPostOrdinaryWithRequestParameters(serviceName, controllerName, actionName, requestParameters);
-    }
-
-    /**
-     * GET 请求指定url
-     *
-     * @param url
-     * @return
-     */
-    public static ResponseEntity<byte[]> doGetOrdinaryWithRequestParameters(String url) {
-        return obtainMicroServiceCaller().doGetOrdinaryWithRequestParameters(url);
     }
 }
