@@ -2,6 +2,7 @@ package build.dream.wwm.utils;
 
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.fallbacks.MicroServiceCallerFallback;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,6 +39,7 @@ public class MicroServiceCaller {
      * @param requestParameters
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doGetOriginalWithRequestParametersFallback")
     public String doGetOriginalWithRequestParameters(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return obtainRestTemplate().getForObject(ProxyUtils.obtainUrl(partitionCode, serviceName, controllerName, actionName, requestParameters), String.class);
     }
@@ -55,6 +57,7 @@ public class MicroServiceCaller {
      * @param requestParameters
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doGetOriginalWithRequestParametersFallback")
     public String doGetOriginalWithRequestParameters(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return obtainRestTemplate().getForObject(ProxyUtils.obtainUrl(null, serviceName, controllerName, actionName, requestParameters), String.class);
     }
@@ -73,6 +76,7 @@ public class MicroServiceCaller {
      * @param requestParameters
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithRequestParametersFallback")
     public String doPostOriginalWithRequestParameters(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(partitionCode, serviceName, controllerName, actionName), ProxyUtils.buildApplicationFormUrlEncodedHttpEntity(requestParameters), String.class);
     }
@@ -90,6 +94,7 @@ public class MicroServiceCaller {
      * @param requestParameters
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithRequestParametersFallback")
     public String doPostOriginalWithRequestParameters(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(null, serviceName, controllerName, actionName), ProxyUtils.buildApplicationFormUrlEncodedHttpEntity(requestParameters), String.class);
     }
@@ -109,8 +114,13 @@ public class MicroServiceCaller {
      * @return
      * @throws IOException
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithRequestParametersAndFilesFallback")
     public String doPostOriginalWithRequestParametersAndFiles(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, Object> requestParameters) throws IOException {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(partitionCode, serviceName, controllerName, actionName), ProxyUtils.buildMultipartHttpEntity(requestParameters), String.class);
+    }
+
+    public String doPostOriginalWithRequestParametersAndFilesFallback(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, Object> requestParameters) throws IOException {
+        return microServiceCallerFallback.doPostOriginalWithRequestParametersAndFilesFallback(partitionCode, serviceName, controllerName, actionName, requestParameters);
     }
 
     /**
@@ -123,10 +133,15 @@ public class MicroServiceCaller {
      * @return
      * @throws IOException
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithRequestParametersAndFilesFallback")
     public String doPostOriginalWithRequestParametersAndFiles(String serviceName, String controllerName, String actionName, Map<String, Object> requestParameters) throws IOException {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(null, serviceName, controllerName, actionName), ProxyUtils.buildMultipartHttpEntity(requestParameters), String.class);
     }
 
+    public String doPostOriginalWithRequestParametersAndFilesFallback(String serviceName, String controllerName, String actionName, Map<String, Object> requestParameters) throws IOException {
+        return microServiceCallerFallback.doPostOriginalWithRequestParametersAndFilesFallback(serviceName, controllerName, actionName, requestParameters);
+    }
+
     /**
      * POST 请求调用分区服务
      *
@@ -137,10 +152,15 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithFormRequestBodyFallback")
     public String doPostOriginalWithFormRequestBody(String partitionCode, String serviceName, String controllerName, String actionName, String requestBody) {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(partitionCode, serviceName, controllerName, actionName), ProxyUtils.buildApplicationFormUrlEncodedHttpEntity(requestBody), String.class);
     }
 
+    public String doPostOriginalWithFormRequestBodyFallback(String partitionCode, String serviceName, String controllerName, String actionName, String requestBody) {
+        return microServiceCallerFallback.doPostOriginalWithFormRequestBodyFallback(partitionCode, serviceName, controllerName, actionName, requestBody);
+    }
+
     /**
      * POST 请求调用公共服务
      *
@@ -150,10 +170,15 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithFormRequestBodyFallback")
     public String doPostOriginalWithFormRequestBody(String serviceName, String controllerName, String actionName, String requestBody) {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(null, serviceName, controllerName, actionName), ProxyUtils.buildApplicationFormUrlEncodedHttpEntity(requestBody), String.class);
     }
 
+    public String doPostOriginalWithFormRequestBodyFallback(String serviceName, String controllerName, String actionName, String requestBody) {
+        return microServiceCallerFallback.doPostOriginalWithFormRequestBodyFallback(serviceName, controllerName, actionName, requestBody);
+    }
+
     /**
      * POST 请求调用分区服务
      *
@@ -164,10 +189,15 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithJsonRequestBodyFallback")
     public String doPostOriginalWithJsonRequestBody(String partitionCode, String serviceName, String controllerName, String actionName, String requestBody) {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(partitionCode, serviceName, controllerName, actionName), ProxyUtils.buildApplicationJsonUtf8HttpEntity(requestBody), String.class);
     }
 
+    public String doPostOriginalWithJsonRequestBodyFallback(String partitionCode, String serviceName, String controllerName, String actionName, String requestBody) {
+        return microServiceCallerFallback.doPostOriginalWithJsonRequestBodyFallback(partitionCode, serviceName, controllerName, actionName, requestBody);
+    }
+
     /**
      * POST 请求调用公共服务
      *
@@ -177,8 +207,13 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithJsonRequestBodyFallback")
     public String doPostOriginalWithJsonRequestBody(String serviceName, String controllerName, String actionName, String requestBody) {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(null, serviceName, controllerName, actionName), ProxyUtils.buildApplicationJsonUtf8HttpEntity(requestBody), String.class);
+    }
+
+    public String doPostOriginalWithJsonRequestBodyFallback(String serviceName, String controllerName, String actionName, String requestBody) {
+        return microServiceCallerFallback.doPostOriginalWithJsonRequestBodyFallback(serviceName, controllerName, actionName, requestBody);
     }
 
     /**
@@ -192,8 +227,13 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithJsonRequestBodyFallback")
     public String doPostOriginalWithJsonRequestBody(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> queryParams, String requestBody) {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(partitionCode, serviceName, controllerName, actionName, queryParams), ProxyUtils.buildApplicationJsonUtf8HttpEntity(requestBody), String.class);
+    }
+
+    public String doPostOriginalWithJsonRequestBodyFallback(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> queryParams, String requestBody) {
+        return microServiceCallerFallback.doPostOriginalWithJsonRequestBodyFallback(partitionCode, serviceName, controllerName, actionName, queryParams, requestBody);
     }
 
     /**
@@ -206,8 +246,13 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostOriginalWithJsonRequestBodyFallback")
     public String doPostOriginalWithJsonRequestBody(String serviceName, String controllerName, String actionName, Map<String, String> queryParams, String requestBody) {
         return obtainRestTemplate().postForObject(ProxyUtils.obtainUrl(null, serviceName, controllerName, actionName, queryParams), ProxyUtils.buildApplicationJsonUtf8HttpEntity(requestBody), String.class);
+    }
+
+    public String doPostOriginalWithJsonRequestBodyFallback(String serviceName, String controllerName, String actionName, Map<String, String> queryParams, String requestBody) {
+        return microServiceCallerFallback.doPostOriginalWithJsonRequestBodyFallback(serviceName, controllerName, actionName, queryParams, requestBody);
     }
 
     /**
@@ -220,8 +265,13 @@ public class MicroServiceCaller {
      * @param requestParameters
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doGetWithRequestParametersFallback")
     public ApiRest doGetWithRequestParameters(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return ApiRest.fromJson(doGetOriginalWithRequestParameters(partitionCode, serviceName, controllerName, actionName, requestParameters));
+    }
+
+    public ApiRest doGetWithRequestParametersFallback(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
+        return microServiceCallerFallback.doGetWithRequestParametersFallback(partitionCode, serviceName, controllerName, actionName, requestParameters);
     }
 
     /**
@@ -233,8 +283,13 @@ public class MicroServiceCaller {
      * @param requestParameters
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doGetWithRequestParametersFallback")
     public ApiRest doGetWithRequestParameters(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return ApiRest.fromJson(doGetOriginalWithRequestParameters(serviceName, controllerName, actionName, requestParameters));
+    }
+
+    public ApiRest doGetWithRequestParametersFallback(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
+        return microServiceCallerFallback.doGetWithRequestParametersFallback(serviceName, controllerName, actionName, requestParameters);
     }
 
     /**
@@ -247,8 +302,13 @@ public class MicroServiceCaller {
      * @param requestParameters
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostWithRequestParametersFallback")
     public ApiRest doPostWithRequestParameters(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return ApiRest.fromJson(doPostOriginalWithRequestParameters(partitionCode, serviceName, controllerName, actionName, requestParameters));
+    }
+
+    public ApiRest doPostWithRequestParametersFallback(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
+        return microServiceCallerFallback.doPostWithRequestParametersFallback(partitionCode, serviceName, controllerName, actionName, requestParameters);
     }
 
     /**
@@ -260,8 +320,13 @@ public class MicroServiceCaller {
      * @param requestParameters
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostWithRequestParametersFallback")
     public ApiRest doPostWithRequestParameters(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return ApiRest.fromJson(doPostOriginalWithRequestParameters(serviceName, controllerName, actionName, requestParameters));
+    }
+
+    public ApiRest doPostWithRequestParametersFallback(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
+        return microServiceCallerFallback.doPostWithRequestParametersFallback(serviceName, controllerName, actionName, requestParameters);
     }
 
     /**
@@ -275,8 +340,13 @@ public class MicroServiceCaller {
      * @return
      * @throws IOException
      */
+    @HystrixCommand(fallbackMethod = "doPostWithRequestParametersAndFilesFallback")
     public ApiRest doPostWithRequestParametersAndFiles(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, Object> requestParameters) throws IOException {
         return ApiRest.fromJson(doPostOriginalWithRequestParametersAndFiles(partitionCode, serviceName, controllerName, actionName, requestParameters));
+    }
+
+    public ApiRest doPostWithRequestParametersAndFilesFallback(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, Object> requestParameters) throws IOException {
+        return microServiceCallerFallback.doPostWithRequestParametersAndFilesFallback(partitionCode, serviceName, controllerName, actionName, requestParameters);
     }
 
     /**
@@ -289,10 +359,15 @@ public class MicroServiceCaller {
      * @return
      * @throws IOException
      */
+    @HystrixCommand(fallbackMethod = "doPostWithRequestParametersAndFilesFallback")
     public ApiRest doPostWithRequestParametersAndFiles(String serviceName, String controllerName, String actionName, Map<String, Object> requestParameters) throws IOException {
         return ApiRest.fromJson(doPostOriginalWithRequestParametersAndFiles(serviceName, controllerName, actionName, requestParameters));
     }
 
+    public ApiRest doPostWithRequestParametersAndFilesFallback(String serviceName, String controllerName, String actionName, Map<String, Object> requestParameters) throws IOException {
+        return microServiceCallerFallback.doPostWithRequestParametersAndFilesFallback(serviceName, controllerName, actionName, requestParameters);
+    }
+
     /**
      * POST 请求调用分区服务
      *
@@ -303,10 +378,15 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostWithFormRequestBodyFallback")
     public ApiRest doPostWithFormRequestBody(String partitionCode, String serviceName, String controllerName, String actionName, String requestBody) {
         return ApiRest.fromJson(doPostOriginalWithFormRequestBody(partitionCode, serviceName, controllerName, actionName, requestBody));
     }
 
+    public ApiRest doPostWithFormRequestBodyFallback(String partitionCode, String serviceName, String controllerName, String actionName, String requestBody) {
+        return microServiceCallerFallback.doPostWithFormRequestBodyFallback(partitionCode, serviceName, controllerName, actionName, requestBody);
+    }
+
     /**
      * POST 请求调用公共服务
      *
@@ -316,10 +396,15 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostWithFormRequestBodyFallback")
     public ApiRest doPostWithFormRequestBody(String serviceName, String controllerName, String actionName, String requestBody) {
         return ApiRest.fromJson(doPostOriginalWithFormRequestBody(serviceName, serviceName, controllerName, actionName, requestBody));
     }
 
+    public ApiRest doPostWithFormRequestBodyFallback(String serviceName, String controllerName, String actionName, String requestBody) {
+        return microServiceCallerFallback.doPostWithFormRequestBodyFallback(serviceName, controllerName, actionName, requestBody);
+    }
+
     /**
      * POST 请求调用分区服务
      *
@@ -330,10 +415,15 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostWithJsonRequestBodyFallback")
     public ApiRest doPostWithJsonRequestBody(String partitionCode, String serviceName, String controllerName, String actionName, String requestBody) {
         return ApiRest.fromJson(doPostOriginalWithJsonRequestBody(partitionCode, serviceName, controllerName, actionName, requestBody));
     }
 
+    public ApiRest doPostWithJsonRequestBodyFallback(String partitionCode, String serviceName, String controllerName, String actionName, String requestBody) {
+        return microServiceCallerFallback.doPostWithJsonRequestBodyFallback(partitionCode, serviceName, controllerName, actionName, requestBody);
+    }
+
     /**
      * POST 请求调用公共服务
      *
@@ -343,8 +433,13 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostWithJsonRequestBodyFallback")
     public ApiRest doPostWithJsonRequestBody(String serviceName, String controllerName, String actionName, String requestBody) {
         return ApiRest.fromJson(doPostOriginalWithJsonRequestBody(serviceName, serviceName, controllerName, actionName, requestBody));
+    }
+
+    public ApiRest doPostWithJsonRequestBodyFallback(String serviceName, String controllerName, String actionName, String requestBody) {
+        return microServiceCallerFallback.doPostWithJsonRequestBodyFallback(serviceName, controllerName, actionName, requestBody);
     }
 
     /**
@@ -358,8 +453,13 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostWithJsonRequestBodyFallback")
     public ApiRest doPostWithJsonRequestBody(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> queryParams, String requestBody) {
         return ApiRest.fromJson(doPostOriginalWithJsonRequestBody(partitionCode, serviceName, controllerName, actionName, queryParams, requestBody));
+    }
+
+    public ApiRest doPostWithJsonRequestBodyFallback(String partitionCode, String serviceName, String controllerName, String actionName, Map<String, String> queryParams, String requestBody) {
+        return microServiceCallerFallback.doPostWithJsonRequestBodyFallback(partitionCode, serviceName, controllerName, actionName, queryParams, requestBody);
     }
 
     /**
@@ -372,8 +472,13 @@ public class MicroServiceCaller {
      * @param requestBody
      * @return
      */
+    @HystrixCommand(fallbackMethod = "doPostWithJsonRequestBodyFallback")
     public ApiRest doPostWithJsonRequestBody(String serviceName, String controllerName, String actionName, Map<String, String> queryParams, String requestBody) {
         return ApiRest.fromJson(doPostOriginalWithJsonRequestBody(serviceName, serviceName, controllerName, actionName, queryParams, requestBody));
+    }
+
+    public ApiRest doPostWithJsonRequestBodyFallback(String serviceName, String controllerName, String actionName, Map<String, String> queryParams, String requestBody) {
+        return microServiceCallerFallback.doPostWithJsonRequestBodyFallback(serviceName, controllerName, actionName, queryParams, requestBody);
     }
 
     /**
@@ -428,15 +533,5 @@ public class MicroServiceCaller {
      */
     public ResponseEntity<byte[]> doPostOrdinaryWithRequestParameters(String serviceName, String controllerName, String actionName, Map<String, String> requestParameters) {
         return obtainRestTemplate().postForEntity(ProxyUtils.obtainUrl(null, serviceName, controllerName, actionName), ProxyUtils.buildApplicationFormUrlEncodedHttpEntity(requestParameters), byte[].class);
-    }
-
-    /**
-     * GET 请求指定url
-     *
-     * @param url
-     * @return
-     */
-    public ResponseEntity<byte[]> doGetOrdinaryWithRequestParameters(String url) {
-        return obtainRestTemplate().getForEntity(url, byte[].class);
     }
 }

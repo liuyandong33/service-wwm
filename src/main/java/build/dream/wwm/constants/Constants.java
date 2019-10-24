@@ -147,4 +147,9 @@ public class Constants {
     public static final String OK = "OK";
 
     public static final String CONTENT_TYPE = "Content-Type";
+
+    // RestTemplate 连接超时时间
+    public static final String REST_TEMPLATE_CONNECT_TIMEOUT = "rest.template.connect.timeout";
+    // RestTemplate 读取超时时间
+    public static final String REST_TEMPLATE_READ_TIMEOUT = "rest.template.read.timeout";
 }

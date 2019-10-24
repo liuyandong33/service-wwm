@@ -5,28 +5,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.UUID;
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @ServletComponentScan
 @MapperScan(basePackages = {"build.dream.wwm.mappers"})
 @EnableSwagger2
+@EnableDiscoveryClient
+@EnableHystrix
 public class Application {
     public static void main(String[] args) {
-//        SpringApplication.run(Application.class, args);
-//        int[] array = new int[]{-1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-//        System.out.println(first(array));
-//        System.out.println(second(array));
-
-        Map<Integer, String> map = new TreeMap<Integer, String>();
-        map.put(11, UUID.randomUUID().toString());
-        map.put(1, UUID.randomUUID().toString());
-        map.put(110, UUID.randomUUID().toString());
+        SpringApplication.run(Application.class, args);
     }
 
     public static long first(int[] array) {
