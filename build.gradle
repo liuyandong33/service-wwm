@@ -46,11 +46,14 @@ dependencies {
     compile("commons-beanutils:commons-beanutils:1.9.4")
     compile("org.apache.commons:commons-pool2:2.7.0")
     compile("org.aspectj:aspectjweaver:1.9.2")
+
+    /*axis需要添加的依赖*/
     compile("com.google.zxing:javase:3.3.3")
     compile("org.apache.axis:axis:1.4")
     compile("axis:axis-jaxrpc:1.4")
     compile("commons-discovery:commons-discovery:0.5")
 
+    /*swagger需要添加的以来*/
     compile("io.springfox:springfox-swagger2:2.9.2")
     compile("io.springfox:springfox-swagger-ui:2.9.2")
 }
