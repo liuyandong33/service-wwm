@@ -3,7 +3,6 @@ package build.dream.wwm.utils;
 import build.dream.wwm.constants.Constants;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
@@ -15,37 +14,38 @@ import java.util.Properties;
 public class PropertyUtils {
     private static Properties properties = null;
 
-    public static String getProperty(String key) throws IOException {
+    public static String getProperty(String key) {
         return getProperties().getProperty(key);
     }
 
-    public static String getPropertySafe(String key) {
-        try {
-            return getProperty(key);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static String getProperty(String key, String defaultValue) throws IOException {
+    public static String getProperty(String key, String defaultValue) {
         return getProperties().getProperty(key, defaultValue);
     }
 
-    public static Properties getProperties() throws IOException {
+    public static Properties getProperties() {
         if (Objects.isNull(properties)) {
             loadProperties();
         }
         return properties;
     }
 
-    public static void loadProperties() throws IOException {
+    public static void loadProperties() {
         properties = new Properties();
-        InputStream inputStream = PropertyUtils.class.getClassLoader().getResourceAsStream(Constants.DEVELOPMENT_PROPERTIES);
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Constants.CHARSET_UTF_8);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        properties.load(bufferedReader);
-        bufferedReader.close();
-        inputStreamReader.close();
-        inputStream.close();
+        try (InputStream inputStream = PropertyUtils.class.getClassLoader().getResourceAsStream(Constants.DEVELOPMENT_PROPERTIES)) {
+            if (Objects.nonNull(inputStream)) {
+                loadProperties(inputStream);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void loadProperties(InputStream inputStream) {
+        try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Constants.CHARSET_UTF_8);
+             BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
+            properties.load(bufferedReader);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
