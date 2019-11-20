@@ -1,0 +1,40 @@
+第一步
+cd /Users/shiyibo/Sc/mysql-8.0.4-rc
+
+// 第二步 cmake
+cmake ^
+-DCMAKE_INSTALL_PREFIX=F:\development\mysql-8.0.18 ^
+-DMYSQL_DATADIR=F:\development\mysql-8.0.18\data ^
+-DSYSCONFDIR=F:\development\mysql-8.0.18 ^
+-DMYSQL_UNIX_ADDR=/Users/shiyibo/Sc/mysql_data/mysql-8.0.4-rc/data/mysql.sock ^
+-DWITH_DEBUG=1 ^
+-DDOWNLOAD_BOOST=1 ^
+-DWITH_BOOST=D:\development\boost\boost_1_71_0
+
+// 第三步 make
+make -j 4
+
+// 第四步 安装
+make install -j 4
+
+// 第五步 初始化数据库
+cd /Users/shiyibo/Sc/mysql_data/mysql-8.0.4-rc/bin
+./mysqld --basedir=/Users/shiyibo/Sc/mysql_data/mysql-8.0.4-rc --datadir=/Users/shiyibo/Sc/mysql_data/mysql-8.0.4-rc/data --initialize-insecure --user=shiyibo
+
+
+mysqld --initialize-insecure --user=mysql
+
+cmake ^
+-DWITH_DEBUG=1 ^
+-DCMAKE_INSTALL_PREFIX=F:\development\mysql-8.0.18\work ^
+-DMYSQL_DATADIR=F:\development\mysql-8.0.18\work\data ^
+-DWITH_INNOBASE_STORAGE_ENGINE=1 ^
+-DWITH_ARCHIVE_STORAGE_ENGINE=1 ^
+-DWITH_READLINE=1 ^
+-DWITH_LIBWRAP=0 ^
+-DMYSQL_UNIX_ADDR=/tmp/mysql.sock ^
+-DENABLED_LOCAL_INFILE=1 ^
+-DENABLE_DOWNLOADS=1 ^
+-DDOWNLOAD_BOOST=1 ^
+-DWITH_BOOST=D:\development\boost\boost_1_71_0 ^
+-DFORCE_INSOURCE_BUILD=1

@@ -129,3 +129,36 @@ CREATE TABLE oauth_client_detail
     deleted_time DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '删除时间，只有当 deleted = 1 时有意义，默认值为1970-01-01 00:00:00',
     deleted TINYINT NOT NULL DEFAULT 0 COMMENT '是否删除，0-未删除，1-已删除'
 ) COMMENT '客户端信息';
+
+DROP TABLE IF EXISTS device;
+CREATE TABLE device
+(
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    name VARCHAR(20) NOT NULL COMMENT '设备名称',
+    code VARCHAR(20) NOT NULL COMMENT '设备编号',
+    model VARCHAR(20) NOT NULL COMMENT '设备型号',
+    category VARCHAR(20) NOT NULL COMMENT '设备分类',
+    department VARCHAR(20) NOT NULL COMMENT '设备所属部门',
+    storage_location VARCHAR(20) NOT NULL COMMENT '设备存放地点',
+    created_date DATETIME NOT NULL COMMENT '建档日期',
+    brand VARCHAR(20) NOT NULL COMMENT '品牌',
+    supplier VARCHAR(20) NOT NULL COMMENT '供应商',
+    purchased_date DATETIME NOT NULL COMMENT '购置日期',
+    quantity DECIMAL(11, 3) NOT NULL COMMENT '数量',
+    price DECIMAL(11, 3) NOT NULL COMMENT '单价',
+    purchased_amount DECIMAL(11, 3) NOT NULL COMMENT '购置金额',
+    administrator VARCHAR(20) NOT NULL COMMENT '所属管理员',
+    registrant VARCHAR(20) NOT NULL COMMENT '登记人',
+    specified_service_life DECIMAL(11, 3) NOT NULL COMMENT '规定使用年限',
+    warranty_expiration_date DATETIME NOT NULL COMMENT '保修截止日期',
+    asset_status VARCHAR(20) NOT NULL COMMENT '设备资产状态',
+    image_url VARCHAR(255) NOT NULL COMMENT '设备图片地址',
+    remark VARCHAR(255) NOT NULL COMMENT '备注',
+    created_time DATETIME NOT NULL DEFAULT NOW() COMMENT '创建时间',
+    created_user_id BIGINT NOT NULL COMMENT '创建人id',
+    updated_time DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW() COMMENT '最后更新时间',
+    updated_user_id BIGINT NOT NULL COMMENT '最后更新人id',
+    updated_remark VARCHAR(255) NOT NULL COMMENT '最后更新备注',
+    deleted_time DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00' COMMENT '删除时间，只有当 deleted = 1 时有意义，默认值为1970-01-01 00:00:00',
+    deleted TINYINT NOT NULL DEFAULT 0 COMMENT '是否删除，0-未删除，1-已删除'
+) COMMENT = '设备基本信息';
