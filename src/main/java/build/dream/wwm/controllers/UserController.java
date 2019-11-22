@@ -1,8 +1,8 @@
 package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
-import build.dream.wwm.models.role.DeleteUserModel;
-import build.dream.wwm.models.role.UpdateUserModel;
+import build.dream.wwm.models.user.DeleteUserModel;
+import build.dream.wwm.models.user.UpdateUserModel;
 import build.dream.wwm.models.user.AddUserModel;
 import build.dream.wwm.services.UserService;
 import org.springframework.http.MediaType;

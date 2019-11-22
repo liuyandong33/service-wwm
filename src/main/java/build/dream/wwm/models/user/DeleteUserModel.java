@@ -1,4 +1,4 @@
-package build.dream.wwm.models.role;
+package build.dream.wwm.models.user;
 
 import build.dream.wwm.models.UserBasicModel;
 

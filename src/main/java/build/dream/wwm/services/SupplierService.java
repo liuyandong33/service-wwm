@@ -2,7 +2,9 @@ package build.dream.wwm.services;
 
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.domains.Supplier;
+import build.dream.wwm.models.supplier.AddSupplierModel;
 import build.dream.wwm.models.supplier.ListSuppliersModel;
+import build.dream.wwm.models.supplier.UpdateSupplierModel;
 import build.dream.wwm.orm.PagedSearchModel;
 import build.dream.wwm.orm.SearchCondition;
 import build.dream.wwm.orm.SearchModel;
@@ -45,5 +47,28 @@ public class SupplierService {
         data.put("total", total);
         data.put("rows", suppliers);
         return ApiRest.builder().data(data).message("查询供应商信息成功！").successful(true).build();
+    }
+
+    /**
+     * 新增供应商信息
+     *
+     * @param addSupplierModel
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ApiRest addSupplier(AddSupplierModel addSupplierModel) {
+        return null;
+    }
+
+    /**
+     * 修改供应商信息
+     *
+     * @param updateSupplierModel
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ApiRest updateSupplier(UpdateSupplierModel updateSupplierModel) {
+        long id = updateSupplierModel.getId();
+        return null;
     }
 }
