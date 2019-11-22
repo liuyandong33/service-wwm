@@ -240,6 +240,7 @@ public class Supplier extends BasicDomain {
         @Override
         public Supplier build() {
             Supplier supplier = super.build();
+            supplier.setWaterWorksId(instance.getWaterWorksId());
             supplier.setCode(instance.getCode());
             supplier.setName(instance.getName());
             supplier.setLinkman(instance.getLinkman());
@@ -261,9 +262,9 @@ public class Supplier extends BasicDomain {
     }
 
     public static final class ColumnName extends BasicDomain.ColumnName {
+        public static final String WATER_WORKS_ID = "water_works_id";
         public static final String CODE = "code";
         public static final String NAME = "name";
-        public static final String WATER_WORKS_ID = "water_works_id";
         public static final String LINKMAN = "linkman";
         public static final String TELEPHONE_NUMBER = "telephone_number";
         public static final String FAX = "fax";
@@ -277,9 +278,9 @@ public class Supplier extends BasicDomain {
     }
 
     public static final class FieldName extends BasicDomain.FieldName {
+        public static final String WATER_WORKS_ID = "waterWorksId";
         public static final String CODE = "code";
         public static final String NAME = "name";
-        public static final String WATER_WORKS_ID = "waterWorksId";
         public static final String LINKMAN = "linkman";
         public static final String TELEPHONE_NUMBER = "telephoneNumber";
         public static final String FAX = "fax";
