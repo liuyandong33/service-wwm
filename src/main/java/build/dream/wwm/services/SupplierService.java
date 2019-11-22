@@ -10,6 +10,7 @@ import build.dream.wwm.orm.PagedSearchModel;
 import build.dream.wwm.orm.SearchCondition;
 import build.dream.wwm.orm.SearchModel;
 import build.dream.wwm.utils.DatabaseHelper;
+import build.dream.wwm.utils.ValidateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,7 +61,41 @@ public class SupplierService {
      */
     @Transactional(rollbackFor = Exception.class)
     public ApiRest addSupplier(AddSupplierModel addSupplierModel) {
-        return null;
+        long waterWorksId = addSupplierModel.obtainWaterWorksId();
+        long userId = addSupplierModel.obtainUserId();
+        String code = addSupplierModel.getCode();
+        String name = addSupplierModel.getName();
+        String linkman = addSupplierModel.getLinkman();
+        String telephoneNumber = addSupplierModel.getTelephoneNumber();
+        String fax = addSupplierModel.getFax();
+        String address = addSupplierModel.getAddress();
+        String postcode = addSupplierModel.getPostcode();
+        String email = addSupplierModel.getEmail();
+        String taxNumber = addSupplierModel.getTaxNumber();
+        String bank = addSupplierModel.getBank();
+        String accountNumber = addSupplierModel.getAccountNumber();
+        String remark = addSupplierModel.getRemark();
+
+        Supplier supplier = Supplier.builder()
+                .waterWorksId(waterWorksId)
+                .code(code)
+                .name(name)
+                .linkman(linkman)
+                .telephoneNumber(telephoneNumber)
+                .fax(fax)
+                .address(address)
+                .postcode(postcode)
+                .email(email)
+                .taxNumber(taxNumber)
+                .bank(bank)
+                .accountNumber(accountNumber)
+                .remark(remark)
+                .createdUserId(userId)
+                .updatedUserId(userId)
+                .updatedRemark("新增供应商信息！")
+                .build();
+        DatabaseHelper.insert(supplier);
+        return ApiRest.builder().data(supplier).message("新增供应商信息成功！").successful(true).build();
     }
 
     /**
@@ -71,7 +106,43 @@ public class SupplierService {
      */
     @Transactional(rollbackFor = Exception.class)
     public ApiRest updateSupplier(UpdateSupplierModel updateSupplierModel) {
+        long waterWorksId = updateSupplierModel.obtainWaterWorksId();
+        long userId = updateSupplierModel.obtainUserId();
         long id = updateSupplierModel.getId();
-        return null;
+        String name = updateSupplierModel.getName();
+        String linkman = updateSupplierModel.getLinkman();
+        String telephoneNumber = updateSupplierModel.getTelephoneNumber();
+        String fax = updateSupplierModel.getFax();
+        String address = updateSupplierModel.getAddress();
+        String postcode = updateSupplierModel.getPostcode();
+        String email = updateSupplierModel.getEmail();
+        String taxNumber = updateSupplierModel.getTaxNumber();
+        String bank = updateSupplierModel.getBank();
+        String accountNumber = updateSupplierModel.getAccountNumber();
+        String remark = updateSupplierModel.getRemark();
+
+        SearchModel searchModel = SearchModel.builder()
+                .autoSetDeletedFalse()
+                .equal(Supplier.ColumnName.ID, id)
+                .equal(Supplier.ColumnName.WATER_WORKS_ID, waterWorksId)
+                .build();
+        Supplier supplier = DatabaseHelper.find(Supplier.class, searchModel);
+        ValidateUtils.notNull(supplier, "供应商信息不存在！");
+
+        supplier.setName(name);
+        supplier.setLinkman(linkman);
+        supplier.setTelephoneNumber(telephoneNumber);
+        supplier.setFax(fax);
+        supplier.setAddress(address);
+        supplier.setPostcode(postcode);
+        supplier.setEmail(email);
+        supplier.setTaxNumber(taxNumber);
+        supplier.setBank(bank);
+        supplier.setAccountNumber(accountNumber);
+        supplier.setRemark(remark);
+        supplier.setUpdatedUserId(userId);
+        supplier.setUpdatedRemark("修改供应商信息！");
+        DatabaseHelper.update(supplier);
+        return ApiRest.builder().data(supplier).message("修改供应商信息成功！").successful(true).build();
     }
 }

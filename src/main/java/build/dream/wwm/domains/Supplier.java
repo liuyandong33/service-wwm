@@ -3,6 +3,11 @@ package build.dream.wwm.domains;
 public class Supplier extends BasicDomain {
     public static final String TABLE_NAME = "supplier";
     /**
+     * 水厂ID
+     */
+    private long waterWorksId;
+
+    /**
      * 编号
      */
     private String code;
@@ -61,6 +66,14 @@ public class Supplier extends BasicDomain {
      * 备注
      */
     private String remark;
+
+    public long getWaterWorksId() {
+        return waterWorksId;
+    }
+
+    public void setWaterWorksId(long waterWorksId) {
+        this.waterWorksId = waterWorksId;
+    }
 
     public String getCode() {
         return code;
@@ -159,6 +172,11 @@ public class Supplier extends BasicDomain {
     }
 
     public static class Builder extends BasicDomain.Builder<Builder, Supplier> {
+        public Builder waterWorksId(long waterWorksId) {
+            instance.setWaterWorksId(waterWorksId);
+            return this;
+        }
+
         public Builder code(String code) {
             instance.setCode(code);
             return this;

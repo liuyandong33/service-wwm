@@ -16,56 +16,78 @@ public class AddSupplierModel extends UserBasicModel {
     /**
      * 名称
      */
+    @NotNull
+    @Length(max = 20)
     private String name;
 
     /**
      * 联系人
      */
+    @NotNull
+    @Length(max = 20)
     private String linkman;
 
     /**
      * 联系电话
      */
+    @NotNull
+    @Length(max = 20)
     private String telephoneNumber;
 
     /**
      * 传真
      */
+    @NotNull
+    @Length(max = 20)
     private String fax;
 
     /**
      * 详细地址
      */
+    @NotNull
+    @Length(max = 255)
     private String address;
 
     /**
      * 邮编
      */
+    @NotNull
+    @Length(max = 20)
     private String postcode;
 
     /**
      * 电子邮箱
      */
+    @NotNull
+    @Length(max = 50)
     private String email;
 
     /**
      * 税号
      */
+    @NotNull
+    @Length(max = 50)
     private String taxNumber;
 
     /**
      * 开户行
      */
+    @NotNull
+    @Length(max = 50)
     private String bank;
 
     /**
      * 开户行账号
      */
+    @NotNull
+    @Length(max = 50)
     private String accountNumber;
 
     /**
      * 备注
      */
+    @NotNull
+    @Length(max = 255)
     private String remark;
 
     public String getCode() {
