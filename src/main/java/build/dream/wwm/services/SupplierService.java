@@ -168,6 +168,7 @@ public class SupplierService {
      * @param deleteSupplierModel
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public ApiRest deleteSupplier(DeleteSupplierModel deleteSupplierModel) {
         long waterWorksId = deleteSupplierModel.obtainWaterWorksId();
         long userId = deleteSupplierModel.obtainUserId();
