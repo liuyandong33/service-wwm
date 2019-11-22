@@ -3,9 +3,7 @@ package build.dream.wwm.services;
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.Supplier;
-import build.dream.wwm.models.supplier.AddSupplierModel;
-import build.dream.wwm.models.supplier.ListSuppliersModel;
-import build.dream.wwm.models.supplier.UpdateSupplierModel;
+import build.dream.wwm.models.supplier.*;
 import build.dream.wwm.orm.PagedSearchModel;
 import build.dream.wwm.orm.SearchCondition;
 import build.dream.wwm.orm.SearchModel;
@@ -14,10 +12,7 @@ import build.dream.wwm.utils.ValidateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SupplierService {
@@ -144,5 +139,52 @@ public class SupplierService {
         supplier.setUpdatedRemark("修改供应商信息！");
         DatabaseHelper.update(supplier);
         return ApiRest.builder().data(supplier).message("修改供应商信息成功！").successful(true).build();
+    }
+
+    /**
+     * 获取供应商信息
+     *
+     * @param obtainSupplierInfoModel
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public ApiRest obtainSupplierInfo(ObtainSupplierInfoModel obtainSupplierInfoModel) {
+        long waterWorksId = obtainSupplierInfoModel.obtainWaterWorksId();
+        long id = obtainSupplierInfoModel.getId();
+
+        SearchModel searchModel = SearchModel.builder()
+                .autoSetDeletedFalse()
+                .equal(Supplier.ColumnName.WATER_WORKS_ID, waterWorksId)
+                .equal(Supplier.ColumnName.ID, id)
+                .build();
+        Supplier supplier = DatabaseHelper.find(Supplier.class, searchModel);
+        ValidateUtils.notNull(supplier, "供应商信息不存在！");
+        return ApiRest.builder().data(supplier).message("获取供应商信息成功！").successful(true).build();
+    }
+
+    /**
+     * 删除供应商信息
+     *
+     * @param deleteSupplierModel
+     * @return
+     */
+    public ApiRest deleteSupplier(DeleteSupplierModel deleteSupplierModel) {
+        long waterWorksId = deleteSupplierModel.obtainWaterWorksId();
+        long userId = deleteSupplierModel.obtainUserId();
+        long id = deleteSupplierModel.getId();
+
+        SearchModel searchModel = SearchModel.builder()
+                .autoSetDeletedFalse()
+                .equal(Supplier.ColumnName.WATER_WORKS_ID, waterWorksId)
+                .equal(Supplier.ColumnName.ID, id)
+                .build();
+        Supplier supplier = DatabaseHelper.find(Supplier.class, searchModel);
+        ValidateUtils.notNull(supplier, "供应商信息不存在！");
+
+        supplier.setUpdatedUserId(userId);
+        supplier.setDeleted(true);
+        supplier.setDeletedTime(new Date());
+        DatabaseHelper.update(supplier);
+        return ApiRest.builder().message("删除供应商信息成功！").successful(true).build();
     }
 }
