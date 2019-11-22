@@ -1,6 +1,7 @@
 package build.dream.wwm.services;
 
 import build.dream.wwm.api.ApiRest;
+import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.Supplier;
 import build.dream.wwm.models.supplier.AddSupplierModel;
 import build.dream.wwm.models.supplier.ListSuppliersModel;
@@ -26,6 +27,8 @@ public class SupplierService {
         int rows = listSuppliersModel.getRows();
 
         List<SearchCondition> searchConditions = new ArrayList<SearchCondition>();
+        searchConditions.add(new SearchCondition(Supplier.ColumnName.DELETED, Constants.SQL_OPERATION_SYMBOL_EQUAL, 0));
+        searchConditions.add(new SearchCondition(Supplier.ColumnName.WATER_WORKS_ID, Constants.SQL_OPERATION_SYMBOL_EQUAL, waterWorksId));
         SearchModel searchModel = SearchModel.builder()
                 .searchConditions(searchConditions)
                 .build();

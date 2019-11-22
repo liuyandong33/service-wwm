@@ -246,13 +246,31 @@ public class Supplier extends BasicDomain {
         public static final String CODE = "code";
         public static final String NAME = "name";
         public static final String WATER_WORKS_ID = "water_works_id";
-        public static final String PARENT_ID = "parent_id";
+        public static final String LINKMAN = "linkman";
+        public static final String TELEPHONE_NUMBER = "telephone_number";
+        public static final String FAX = "fax";
+        public static final String ADDRESS = "address";
+        public static final String POSTCODE = "postcode";
+        public static final String EMAIL = "email";
+        public static final String TAX_NUMBER = "tax_number";
+        public static final String BANK = "bank";
+        public static final String ACCOUNT_NUMBER = "account_number";
+        public static final String remark = "remark";
     }
 
     public static final class FieldName extends BasicDomain.FieldName {
         public static final String CODE = "code";
         public static final String NAME = "name";
         public static final String WATER_WORKS_ID = "waterWorksId";
-        public static final String PARENT_ID = "parentId";
+        public static final String LINKMAN = "linkman";
+        public static final String TELEPHONE_NUMBER = "telephoneNumber";
+        public static final String FAX = "fax";
+        public static final String ADDRESS = "address";
+        public static final String POSTCODE = "postcode";
+        public static final String EMAIL = "email";
+        public static final String TAX_NUMBER = "taxNumber";
+        public static final String BANK = "bank";
+        public static final String ACCOUNT_NUMBER = "accountNumber";
+        public static final String remark = "remark";
     }
 }
