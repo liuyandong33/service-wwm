@@ -16,6 +16,12 @@ import java.util.*;
 
 @Service
 public class SupplierService {
+    /**
+     * 分页查询供应商信息
+     *
+     * @param listSuppliersModel
+     * @return
+     */
     @Transactional(readOnly = true)
     public ApiRest listSuppliers(ListSuppliersModel listSuppliersModel) {
         long waterWorksId = listSuppliersModel.obtainWaterWorksId();
