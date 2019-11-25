@@ -3,7 +3,6 @@ package build.dream.wwm.fallbacks;
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.ErrorConstants;
 import build.dream.wwm.exceptions.Error;
-import build.dream.wwm.utils.ProxyUtils;
 
 import java.io.IOException;
 import java.util.Map;

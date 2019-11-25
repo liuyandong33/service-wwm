@@ -2,8 +2,7 @@ package build.dream.wwm.configurations;
 
 import build.dream.wwm.constants.Constants;
 import build.dream.wwm.utils.ConfigurationUtils;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -12,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class RestTemplateConfiguration {
     @Bean
-    @LoadBalanced
+//    @LoadBalanced
     public RestTemplate restTemplate() {
         String connectTimeout = ConfigurationUtils.getConfiguration(Constants.REST_TEMPLATE_CONNECT_TIMEOUT);
         String readTimeout = ConfigurationUtils.getConfiguration(Constants.REST_TEMPLATE_READ_TIMEOUT);
