@@ -8,7 +8,6 @@ import build.dream.wwm.orm.UpdateModel;
 import build.dream.wwm.tuples.Tuple2;
 import build.dream.wwm.tuples.Tuple3;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -52,11 +51,11 @@ public class DatabaseHelper {
         return UniversalDatabaseHelper.delete(obtainUniversalMapper(), domainClass, id);
     }
 
-    public static long markedDelete(Class<?> domainClass, BigInteger id, BigInteger userId, String updatedRemark) {
+    public static long markedDelete(Class<?> domainClass, long id, long userId, String updatedRemark) {
         return UniversalDatabaseHelper.markedDelete(obtainUniversalMapper(), domainClass, id, userId, updatedRemark);
     }
 
-    public static long markedDelete(Class<?> domainClass, BigInteger userId, String updatedRemark, Tuple3<String, String, Object>... searchConditions) {
+    public static long markedDelete(Class<?> domainClass, long userId, String updatedRemark, Tuple3<String, String, Object>... searchConditions) {
         return UniversalDatabaseHelper.markedDelete(obtainUniversalMapper(), domainClass, userId, updatedRemark, searchConditions);
     }
 
