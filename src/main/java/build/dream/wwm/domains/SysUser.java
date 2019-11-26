@@ -29,7 +29,7 @@ public class SysUser extends BasicDomain {
     /**
      * 水厂ID
      */
-    private long waterWorksId;
+    private Long waterWorksId;
     /**
      * 账户是否没有过期，1-没有过期，0-已经过期
      */
@@ -98,11 +98,11 @@ public class SysUser extends BasicDomain {
         this.password = password;
     }
 
-    public long getWaterWorksId() {
+    public Long getWaterWorksId() {
         return waterWorksId;
     }
 
-    public void setWaterWorksId(long waterWorksId) {
+    public void setWaterWorksId(Long waterWorksId) {
         this.waterWorksId = waterWorksId;
     }
 
@@ -169,7 +169,7 @@ public class SysUser extends BasicDomain {
             return this;
         }
 
-        public Builder waterWorksId(long waterWorksId) {
+        public Builder waterWorksId(Long waterWorksId) {
             instance.setWaterWorksId(waterWorksId);
             return this;
         }

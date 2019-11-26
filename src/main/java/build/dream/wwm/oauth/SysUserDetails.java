@@ -1,22 +1,22 @@
 package build.dream.wwm.oauth;
 
 public class SysUserDetails extends AbstractUserDetails {
-    private long userId;
-    private long waterWorksId;
+    private Long userId;
+    private Long waterWorksId;
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public long getWaterWorksId() {
+    public Long getWaterWorksId() {
         return waterWorksId;
     }
 
-    public void setWaterWorksId(long waterWorksId) {
+    public void setWaterWorksId(Long waterWorksId) {
         this.waterWorksId = waterWorksId;
     }
 }

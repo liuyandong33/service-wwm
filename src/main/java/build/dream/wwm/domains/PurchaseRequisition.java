@@ -7,7 +7,7 @@ public class PurchaseRequisition extends BasicDomain {
     /**
      * 水厂ID
      */
-    private long waterWorksId;
+    private Long waterWorksId;
 
     /**
      * 采购申请单编号
@@ -49,11 +49,11 @@ public class PurchaseRequisition extends BasicDomain {
      */
     private Integer status;
 
-    public long getWaterWorksId() {
+    public Long getWaterWorksId() {
         return waterWorksId;
     }
 
-    public void setWaterWorksId(long waterWorksId) {
+    public void setWaterWorksId(Long waterWorksId) {
         this.waterWorksId = waterWorksId;
     }
 
@@ -122,7 +122,7 @@ public class PurchaseRequisition extends BasicDomain {
     }
 
     public static class Builder extends BasicDomain.Builder<Builder, PurchaseRequisition> {
-        public Builder waterWorksId(long waterWorksId) {
+        public Builder waterWorksId(Long waterWorksId) {
             instance.setWaterWorksId(waterWorksId);
             return this;
         }

@@ -5,7 +5,7 @@ public class SysRole extends BasicDomain {
     /**
      * 商户ID
      */
-    private long waterWorksId;
+    private Long waterWorksId;
     /**
      * 角色编号
      */
@@ -15,11 +15,11 @@ public class SysRole extends BasicDomain {
      */
     private String roleName;
 
-    public long getWaterWorksId() {
+    public Long getWaterWorksId() {
         return waterWorksId;
     }
 
-    public void setWaterWorksId(long waterWorksId) {
+    public void setWaterWorksId(Long waterWorksId) {
         this.waterWorksId = waterWorksId;
     }
 
@@ -40,7 +40,7 @@ public class SysRole extends BasicDomain {
     }
 
     public static class Builder extends BasicDomain.Builder<Builder, SysRole> {
-        public Builder waterWorksId(long waterWorksId) {
+        public Builder waterWorksId(Long waterWorksId) {
             instance.setWaterWorksId(waterWorksId);
             return this;
         }

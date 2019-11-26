@@ -5,7 +5,7 @@ public class Supplier extends BasicDomain {
     /**
      * 水厂ID
      */
-    private long waterWorksId;
+    private Long waterWorksId;
 
     /**
      * 编号
@@ -67,11 +67,11 @@ public class Supplier extends BasicDomain {
      */
     private String remark;
 
-    public long getWaterWorksId() {
+    public Long getWaterWorksId() {
         return waterWorksId;
     }
 
-    public void setWaterWorksId(long waterWorksId) {
+    public void setWaterWorksId(Long waterWorksId) {
         this.waterWorksId = waterWorksId;
     }
 
@@ -172,7 +172,7 @@ public class Supplier extends BasicDomain {
     }
 
     public static class Builder extends BasicDomain.Builder<Builder, Supplier> {
-        public Builder waterWorksId(long waterWorksId) {
+        public Builder waterWorksId(Long waterWorksId) {
             instance.setWaterWorksId(waterWorksId);
             return this;
         }
