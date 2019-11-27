@@ -3,20 +3,19 @@ package build.dream.wwm.services;
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.*;
+import build.dream.wwm.models.device.DeleteDeviceModel;
 import build.dream.wwm.models.device.ListDevicesModel;
 import build.dream.wwm.models.device.ObtainDeviceInfoModel;
 import build.dream.wwm.orm.PagedSearchModel;
 import build.dream.wwm.orm.SearchCondition;
 import build.dream.wwm.orm.SearchModel;
+import build.dream.wwm.orm.UpdateModel;
 import build.dream.wwm.utils.DatabaseHelper;
 import build.dream.wwm.utils.ValidateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class DeviceService {
@@ -92,5 +91,39 @@ public class DeviceService {
         data.put("attachedDevices", attachedDevices);
         data.put("wearParts", wearParts);
         return ApiRest.builder().data(data).message("获取设备信息成功！").successful(true).build();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public ApiRest deleteDevice(DeleteDeviceModel deleteDeviceModel) {
+        long waterWorksId = deleteDeviceModel.obtainWaterWorksId();
+        long userId = deleteDeviceModel.obtainUserId();
+        long id = deleteDeviceModel.getId();
+
+        Date now = new Date();
+
+        UpdateModel deviceUpdateModel = UpdateModel.builder()
+                .autoSetDeletedFalse()
+                .equal(Device.ColumnName.ID, id)
+                .equal(Device.ColumnName.WATER_WORKS_ID, waterWorksId)
+                .addContentValue(Device.ColumnName.DELETED, 1, 1)
+                .addContentValue(Device.ColumnName.DELETED_TIME, now, 1)
+                .addContentValue(Device.ColumnName.UPDATED_USER_ID, userId, 1)
+                .addContentValue(Device.ColumnName.UPDATED_REMARK, "删除设备信息", 1)
+                .build();
+        DatabaseHelper.universalUpdate(deviceUpdateModel, Device.TABLE_NAME);
+
+        UpdateModel updateModel = UpdateModel.builder()
+                .autoSetDeletedFalse()
+                .equal("water_works_id", waterWorksId)
+                .equal("id", id)
+                .addContentValue("deleted", 1, 1)
+                .addContentValue("deleted_time", now, 1)
+                .addContentValue("updated_user_id", userId, 1)
+                .addContentValue("updated_remark", "删除设备信息", 1)
+                .build();
+        DatabaseHelper.universalUpdate(updateModel, TechnicalData.TABLE_NAME);
+        DatabaseHelper.universalUpdate(updateModel, AttachedDevice.TABLE_NAME);
+        DatabaseHelper.universalUpdate(updateModel, WearPart.TABLE_NAME);
+        return ApiRest.builder().message("删除设备信息成功！").successful(true).build();
     }
 }
