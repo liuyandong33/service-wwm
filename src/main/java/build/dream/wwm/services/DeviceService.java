@@ -140,6 +140,7 @@ public class DeviceService {
      * @param addDeviceModel
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public ApiRest addDevice(AddDeviceModel addDeviceModel) {
         return ApiRest.builder().message("增加设备信息成功！").successful(true).build();
     }
@@ -150,6 +151,7 @@ public class DeviceService {
      * @param updateDeviceModel
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public ApiRest updateDevice(UpdateDeviceModel updateDeviceModel) {
         return ApiRest.builder().message("修改设备信息成功！").successful(true).build();
     }
