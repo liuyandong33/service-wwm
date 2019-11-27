@@ -101,16 +101,19 @@ public class DeviceService {
 
         Date now = new Date();
 
-        UpdateModel deviceUpdateModel = UpdateModel.builder()
+        SearchModel deviceSearchModel = SearchModel.builder()
                 .autoSetDeletedFalse()
                 .equal(Device.ColumnName.ID, id)
                 .equal(Device.ColumnName.WATER_WORKS_ID, waterWorksId)
-                .addContentValue(Device.ColumnName.DELETED, 1, 1)
-                .addContentValue(Device.ColumnName.DELETED_TIME, now, 1)
-                .addContentValue(Device.ColumnName.UPDATED_USER_ID, userId, 1)
-                .addContentValue(Device.ColumnName.UPDATED_REMARK, "删除设备信息", 1)
                 .build();
-        DatabaseHelper.universalUpdate(deviceUpdateModel, Device.TABLE_NAME);
+        Device device = DatabaseHelper.find(Device.class, deviceSearchModel);
+        ValidateUtils.notNull(device, "设备信息不存在！");
+
+        device.setDeleted(true);
+        device.setDeletedTime(now);
+        device.setUpdatedUserId(userId);
+        device.setUpdatedRemark("删除设备信息");
+        DatabaseHelper.update(device);
 
         UpdateModel updateModel = UpdateModel.builder()
                 .autoSetDeletedFalse()
