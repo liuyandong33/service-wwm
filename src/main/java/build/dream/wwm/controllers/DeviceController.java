@@ -1,9 +1,7 @@
 package build.dream.wwm.controllers;
 
 import build.dream.wwm.annotations.ApiRestAction;
-import build.dream.wwm.models.device.DeleteDeviceModel;
-import build.dream.wwm.models.device.ListDevicesModel;
-import build.dream.wwm.models.device.ObtainDeviceInfoModel;
+import build.dream.wwm.models.device.*;
 import build.dream.wwm.services.DeviceService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -46,6 +44,30 @@ public class DeviceController {
     @ResponseBody
     @ApiRestAction(modelClass = DeleteDeviceModel.class, serviceClass = DeviceService.class, serviceMethodName = "deleteDevice", error = "删除设备失败")
     public String deleteDevice() {
+        return null;
+    }
+
+    /**
+     * 增加设备信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/addDevice", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = AddDeviceModel.class, serviceClass = DeviceService.class, serviceMethodName = "addDevice", error = "增加设备信息失败")
+    public String addDevice() {
+        return null;
+    }
+
+    /**
+     * 修改设备信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/updateDevice", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @ApiRestAction(modelClass = UpdateDeviceModel.class, serviceClass = DeviceService.class, serviceMethodName = "updateDevice", error = "修改设备信息失败")
+    public String updateDevice() {
         return null;
     }
 }

@@ -3,9 +3,7 @@ package build.dream.wwm.services;
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.Constants;
 import build.dream.wwm.domains.*;
-import build.dream.wwm.models.device.DeleteDeviceModel;
-import build.dream.wwm.models.device.ListDevicesModel;
-import build.dream.wwm.models.device.ObtainDeviceInfoModel;
+import build.dream.wwm.models.device.*;
 import build.dream.wwm.orm.PagedSearchModel;
 import build.dream.wwm.orm.SearchCondition;
 import build.dream.wwm.orm.SearchModel;
@@ -134,5 +132,25 @@ public class DeviceService {
         DatabaseHelper.universalUpdate(updateModel, AttachedDevice.TABLE_NAME);
         DatabaseHelper.universalUpdate(updateModel, WearPart.TABLE_NAME);
         return ApiRest.builder().message("删除设备信息成功！").successful(true).build();
+    }
+
+    /**
+     * 增加设备信息
+     *
+     * @param addDeviceModel
+     * @return
+     */
+    public ApiRest addDevice(AddDeviceModel addDeviceModel) {
+        return ApiRest.builder().message("增加设备信息成功！").successful(true).build();
+    }
+
+    /**
+     * 修改设备信息
+     *
+     * @param updateDeviceModel
+     * @return
+     */
+    public ApiRest updateDevice(UpdateDeviceModel updateDeviceModel) {
+        return ApiRest.builder().message("修改设备信息成功！").successful(true).build();
     }
 }
