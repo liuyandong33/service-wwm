@@ -93,6 +93,12 @@ public class DeviceService {
         return ApiRest.builder().data(data).message("获取设备信息成功！").successful(true).build();
     }
 
+    /**
+     * 删除设备
+     *
+     * @param deleteDeviceModel
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     public ApiRest deleteDevice(DeleteDeviceModel deleteDeviceModel) {
         long waterWorksId = deleteDeviceModel.obtainWaterWorksId();
