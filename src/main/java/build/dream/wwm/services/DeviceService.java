@@ -2,8 +2,7 @@ package build.dream.wwm.services;
 
 import build.dream.wwm.api.ApiRest;
 import build.dream.wwm.constants.Constants;
-import build.dream.wwm.domains.Device;
-import build.dream.wwm.domains.Supplier;
+import build.dream.wwm.domains.*;
 import build.dream.wwm.models.device.ListDevicesModel;
 import build.dream.wwm.models.device.ObtainDeviceInfoModel;
 import build.dream.wwm.orm.PagedSearchModel;
@@ -70,16 +69,28 @@ public class DeviceService {
         long waterWorksId = obtainDeviceInfoModel.obtainWaterWorksId();
         long id = obtainDeviceInfoModel.getId();
 
+        SearchModel deviceSearchModel = SearchModel.builder()
+                .autoSetDeletedFalse()
+                .equal(Device.ColumnName.ID, id)
+                .equal(Device.ColumnName.WATER_WORKS_ID, waterWorksId)
+                .build();
+        Device device = DatabaseHelper.find(Device.class, deviceSearchModel);
+        ValidateUtils.notNull(device, "设备信息不存在！");
+
         SearchModel searchModel = SearchModel.builder()
                 .autoSetDeletedFalse()
-                .equal("id", id)
                 .equal("water_works_id", waterWorksId)
+                .equal("device_id", id)
                 .build();
-        Device device = DatabaseHelper.find(Device.class, searchModel);
-        ValidateUtils.notNull(device, "设备信息不存在！");
+        TechnicalData technicalData = DatabaseHelper.find(TechnicalData.class, searchModel);
+        List<AttachedDevice> attachedDevices = DatabaseHelper.findAll(AttachedDevice.class, searchModel);
+        List<WearPart> wearParts = DatabaseHelper.findAll(WearPart.class, searchModel);
 
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("device", device);
+        data.put("technicalData", technicalData);
+        data.put("attachedDevices", attachedDevices);
+        data.put("wearParts", wearParts);
         return ApiRest.builder().data(data).message("获取设备信息成功！").successful(true).build();
     }
 }

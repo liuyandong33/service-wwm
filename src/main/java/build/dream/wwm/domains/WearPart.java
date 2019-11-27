@@ -95,4 +95,78 @@ public class WearPart extends BasicDomain {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+    public static class Builder extends BasicDomain.Builder<Builder, WearPart> {
+        public Builder waterWorksId(Long waterWorksId) {
+            instance.setWaterWorksId(waterWorksId);
+            return this;
+        }
+
+        public Builder deviceId(Long deviceId) {
+            instance.setDeviceId(deviceId);
+            return this;
+        }
+
+        public Builder deviceCode(String deviceCode) {
+            instance.setDeviceCode(deviceCode);
+            return this;
+        }
+
+        public Builder name(String name) {
+            instance.setName(name);
+            return this;
+        }
+
+        public Builder model(String model) {
+            instance.setModel(model);
+            return this;
+        }
+
+        public Builder quantity(Double quantity) {
+            instance.setQuantity(quantity);
+            return this;
+        }
+
+        public Builder remark(String remark) {
+            instance.setRemark(remark);
+            return this;
+        }
+
+        @Override
+        public WearPart build() {
+            WearPart wearPart = super.build();
+            wearPart.setWaterWorksId(instance.getWaterWorksId());
+            wearPart.setDeviceId(instance.getDeviceId());
+            wearPart.setDeviceCode(instance.getDeviceCode());
+            wearPart.setName(instance.getName());
+            wearPart.setModel(instance.getModel());
+            wearPart.setQuantity(instance.getQuantity());
+            wearPart.setRemark(instance.getRemark());
+            return wearPart;
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class ColumnName extends BasicDomain.ColumnName {
+        public static final String WATER_WORKS_ID = "water_works_id";
+        public static final String DEVICE_ID = "device_id";
+        public static final String DEVICE_CODE = "device_code";
+        public static final String NAME = "name";
+        public static final String MODEL = "model";
+        public static final String QUANTITY = "quantity";
+        public static final String REMARK = "remark";
+    }
+
+    public static final class FieldName extends BasicDomain.FieldName {
+        public static final String WATER_WORKS_ID = "waterWorksId";
+        public static final String DEVICE_ID = "deviceId";
+        public static final String DEVICE_CODE = "deviceCode";
+        public static final String NAME = "name";
+        public static final String MODEL = "model";
+        public static final String QUANTITY = "quantity";
+        public static final String REMARK = "remark";
+    }
 }

@@ -69,4 +69,62 @@ public class AttachedDevice extends BasicDomain {
     public void setDetailedParameter(String detailedParameter) {
         this.detailedParameter = detailedParameter;
     }
+
+    public static class Builder extends BasicDomain.Builder<Builder, AttachedDevice> {
+        public Builder waterWorksId(Long waterWorksId) {
+            instance.setWaterWorksId(waterWorksId);
+            return this;
+        }
+
+        public Builder deviceId(Long deviceId) {
+            instance.setDeviceId(deviceId);
+            return this;
+        }
+
+        public Builder deviceCode(String deviceCode) {
+            instance.setDeviceCode(deviceCode);
+            return this;
+        }
+
+        public Builder deviceName(String deviceName) {
+            instance.setDeviceName(deviceName);
+            return this;
+        }
+
+        public Builder detailedParameter(String detailedParameter) {
+            instance.setDetailedParameter(detailedParameter);
+            return this;
+        }
+
+        @Override
+        public AttachedDevice build() {
+            AttachedDevice attachedDevice = super.build();
+            attachedDevice.setWaterWorksId(instance.getWaterWorksId());
+            attachedDevice.setDeviceId(instance.getDeviceId());
+            attachedDevice.setDeviceCode(instance.getDeviceCode());
+            attachedDevice.setDeviceName(instance.getDeviceName());
+            attachedDevice.setDetailedParameter(instance.getDetailedParameter());
+            return attachedDevice;
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class ColumnName extends BasicDomain.ColumnName {
+        public static final String WATER_WORKS_ID = "water_works_id";
+        public static final String DEVICE_ID = "device_id";
+        public static final String DEVICE_CODE = "device_code";
+        public static final String DEVICE_NAME = "device_name";
+        public static final String DETAILED_PARAMETER = "detailed_parameter";
+    }
+
+    public static final class FieldName extends BasicDomain.FieldName {
+        public static final String WATER_WORKS_ID = "waterWorksId";
+        public static final String DEVICE_ID = "deviceId";
+        public static final String DEVICE_CODE = "deviceCode";
+        public static final String DEVICE_NAME = "deviceName";
+        public static final String DETAILED_PARAMETER = "detailedParameter";
+    }
 }
