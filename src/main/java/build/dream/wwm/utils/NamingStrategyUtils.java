@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NamingStrategyUtils {
+    private static Pattern camelCasePattern = Pattern.compile("[A-Z]");
+
     /**
      * 下换线转驼峰
      *
@@ -60,16 +62,36 @@ public class NamingStrategyUtils {
         return underscoreToLowerCamelCase(underscore.toLowerCase());
     }
 
-    public static String underscoreToLowerUpperCamelCase(String underscore) {
+    /**
+     * 下划线转大驼峰
+     * test_named ==> TestNamed
+     *
+     * @param underscore
+     * @return
+     */
+    public static String underscoreToUpperCamelCase(String underscore) {
         return underscoreToCamelCase(underscore, 2);
     }
 
-    public static String underscoreToLowerUpperCamelCaseIgnoreCase(String underscore) {
+    /**
+     * 下划线转大驼峰，忽略下划线命名中的大小写
+     * Test_Named ==> TestNamed
+     * test_named ==> TestNamed
+     *
+     * @param underscore
+     * @return
+     */
+    public static String underscoreToUpperCamelCaseIgnoreCase(String underscore) {
         return underscoreToCamelCase(underscore.toLowerCase(), 2);
     }
 
-    private static Pattern camelCasePattern = Pattern.compile("[A-Z]");
-
+    /**
+     * 小驼峰转下划线命名
+     * testNamed ==> test_named
+     *
+     * @param camelCase
+     * @return
+     */
     public static String lowerCamelCaseToUnderscore(String camelCase) {
         Matcher matcher = camelCasePattern.matcher(camelCase);
         StringBuffer underscore = new StringBuffer();
@@ -80,6 +102,13 @@ public class NamingStrategyUtils {
         return underscore.toString();
     }
 
+    /**
+     * 大驼峰转下划线命名
+     * TestNamed ==> test_named
+     *
+     * @param camelCase
+     * @return
+     */
     public static String upperCamelCaseToUnderscore(String camelCase) {
         return lowerCamelCaseToUnderscore(camelCase).substring(1);
     }
