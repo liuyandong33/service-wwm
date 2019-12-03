@@ -1,6 +1,7 @@
 package build.dream.wwm.listeners;
 
 import build.dream.wwm.utils.ApplicationHandler;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -13,7 +14,8 @@ public class BasicServletContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext servletContext = servletContextEvent.getServletContext();
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
-        webApplicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+        AutowireCapableBeanFactory autowireCapableBeanFactory = webApplicationContext.getAutowireCapableBeanFactory();
+        autowireCapableBeanFactory.autowireBean(this);
         ApplicationHandler.setApplicationContext(webApplicationContext);
         ApplicationHandler.setServletContext(servletContext);
     }

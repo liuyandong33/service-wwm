@@ -713,7 +713,7 @@ public class ApplicationHandler {
         } else if (type == Float.class) {
             list = buildFloatArrayList(fieldValue, separator);
         } else if (type == Double.class) {
-            list = buildFloatArrayList(fieldValue, separator);
+            list = buildDoubleArrayList(fieldValue, separator);
         } else if (type == Character.class) {
             list = buildCharacterArrayList(fieldValue, separator);
         } else if (type == Boolean.class) {
