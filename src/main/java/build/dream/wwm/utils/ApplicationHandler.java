@@ -819,7 +819,7 @@ public class ApplicationHandler {
 
     public static String obtainParameterErrorMessage(String parameterName) {
         String deploymentEnvironment = ConfigurationUtils.getConfiguration(Constants.DEPLOYMENT_ENVIRONMENT);
-        if (Constants.WWW.equals(deploymentEnvironment)) {
+        if (Constants.PRODUCTION.equals(deploymentEnvironment)) {
             return Constants.API_PARAMETER_ERROR_MESSAGE;
         }
 
